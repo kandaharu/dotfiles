@@ -1,8 +1,5 @@
-"――――――――――――――――――――――――――
-" 基本的な設定
-"――――――――――――――――――――――――――
-"カラースキーム設定
-colorscheme torte
+
+rscheme torte
 "vi 互換モードをオフにする
 set nocompatible
 "マウスで選択できるようにする
@@ -27,7 +24,6 @@ set nocompatible
 set hidden
 ".txtファイルで自動的に日本語入力ON
 au BufNewFile,BufRead *.txt set iminsert=2
-
 
 "――――――――――――――――――――――――――
 " 表示
@@ -56,10 +52,12 @@ set showmatch
 set autoindent
 "自動インデント
 set smartindent
-"autoindent時に挿入されるタブの幅
-set shiftwidth=2
+"タブの代わりにスペースを用いる
+set expandtab
 "タブ幅の設定
 set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 "Tab文字や、EOFを表示
 set list
 "tab文字やEOLを表示
