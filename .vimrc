@@ -1,11 +1,14 @@
-
-rscheme torte
+"――――――――――――――――――――――――――
+" 基本的な設定
+"――――――――――――――――――――――――――
+"カラースキーム設定
+"set colorscheme torte
 "vi 互換モードをオフにする
 set nocompatible
 "マウスで選択できるようにする
 set mouse=a
 "クリップボードをWindowsと連携
-set clipboard=unnamed
+set clipboard=+unnamed
 "ファイル形式を検出する
 filetype on
 "ファイル形式別インデントのロードをオンにする
@@ -18,8 +21,6 @@ set vb t_vb=
 set guioptions=F
 "Tabで補完できるようにする
 "set wildchar=<Tab>
-"VI互換をオフ
-set nocompatible
 "変更中のファイルでも、保存しないで他のファイルを表示
 set hidden
 ".txtファイルで自動的に日本語入力ON
@@ -38,8 +39,6 @@ set number
 set showcmd
 "現在のカーソル位置を表示
 set ruler
-"バックスペースを押したときに上の行末に移動する
-set backspace=2
 "折り返ししない
 "set wrap! = nowrap
 "折りたたみを有効にする
@@ -48,22 +47,10 @@ set foldmethod=syntax
 set shortmess+=I
 "括弧の対応表示
 set showmatch
-"自動インデント
-set autoindent
-"自動インデント
-set smartindent
-"タブの代わりにスペースを用いる
-set expandtab
-"タブ幅の設定
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
 "Tab文字や、EOFを表示
 set list
 "tab文字やEOLを表示
 set lcs=tab:^\ ,eol:<,extends:>
-"行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
-set smarttab
 " {{{
 " 全角スペース, 行末半角スペースの色変え
 if has("syntax")
@@ -84,7 +71,28 @@ endif
 " }}}
 
 "――――――――――――――――――――――――――
-" 検索設定
+" 操作
+"――――――――――――――――――――――――――
+"カーソルを行頭、行末で止まらないようにする
+set whichwrap=b,s,h,l,<,>,[,]
+"バックスペースを押したときに上の行末に移動する
+set backspace=2
+"自動インデント
+set autoindent
+set smartindent
+"行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
+set smarttab
+"タブの代わりにスペースを用いる
+set expandtab
+"タブ幅の設定
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+"貼り付けモードのオンオフ
+set pastetoggle=<F12>
+
+"――――――――――――――――――――――――――
+" 検索
 "――――――――――――――――――――――――――
 "検索結果文字列のハイライトを有効にする
 set hlsearch
@@ -96,10 +104,21 @@ set smartcase
 set incsearch
 
 "――――――――――――――――――――――――――
-" 操作
+" 保存
 "――――――――――――――――――――――――――
-"カーソルを行頭、行末で止まらないようにする
-set whichwrap=b,s,h,l,<,>,[,]
+"編集されたら読み直す
+set autoread
+"バックアップファイルを作るディレクトリ
+set backupdir=$HOME/.vimfiles/backup
+"スワップファイル用のディレクトリ
+set directory=$HOME/.vimfiles/swap
+
+"――――――――――――――――――――――――――
+" マッピング
+"――――――――――――――――――――――――――
+"保存
+inoremap <C-S> <ESC>:w
+noremap <C-S> <ESC>:w
 "表示行単位で移動
 noremap j gj
 noremap k gk
@@ -108,9 +127,9 @@ noremap <UP> gk
 "コピー
 vnoremap <C-C> "*y
 "貼り付け
-inoremap <C-V> <ESC>"*pa
-"切り取り
 vnoremap <C-X> "*d<ESC>
+"切り取り
+inoremap <C-V> <ESC>"*pa
 vnoremap <C-V> d"*P
 cnoremap <C-V> <C-R>*
 "全選択
@@ -133,17 +152,3 @@ vnoremap { "zdi{<C-R>z}<ESC>
 vnoremap [ "zdi[<C-R>z]<ESC>
 vnoremap " "zdi"<C-R>z"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
-
-
-"――――――――――――――――――――――――――
-" 保存
-"――――――――――――――――――――――――――
-"保存
-inoremap <C-S> <ESC>:w
-noremap <C-S> <ESC>:w
-"編集されたら読み直す
-set autoread
-"バックアップファイルを作るディレクトリ
-set backupdir=$HOME/.vimfiles/backup
-"スワップファイル用のディレクトリ
-set directory=$HOME/.vimfiles/swap
