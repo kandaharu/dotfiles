@@ -2,7 +2,7 @@
 " 基本的な設定
 "――――――――――――――――――――――――――
 "カラースキーム設定
-"set colorscheme torte
+"colorscheme torte
 "vi 互換モードをオフにする
 set nocompatible
 "マウスで選択できるようにする
@@ -20,11 +20,11 @@ set vb t_vb=
 "GUIオプション
 set guioptions=F
 "Tabで補完できるようにする
-"set wildchar=<Tab>
+set wildchar=<Tab>
 "変更中のファイルでも、保存しないで他のファイルを表示
 set hidden
 ".txtファイルで自動的に日本語入力ON
-au BufNewFile,BufRead *.txt set iminsert=2
+"au BufNewFile,BufRead *.txt set iminsert=2
 
 "――――――――――――――――――――――――――
 " 表示
@@ -40,7 +40,7 @@ set showcmd
 "現在のカーソル位置を表示
 set ruler
 "折り返ししない
-"set wrap! = nowrap
+set wrap! = nowrap
 "折りたたみを有効にする
 set foldmethod=syntax
 "起動時のメッセージを表示しない
@@ -51,7 +51,19 @@ set showmatch
 set list
 "tab文字やEOLを表示
 set lcs=tab:^\ ,eol:<,extends:>
-" {{{
+"カーソル行をハイライト
+set cursorline
+" カレントウィンドウにのみ罫線を引く
+augroup cch
+  autocmd! cch
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter,BufRead * set cursorline
+augroup END
+
+:hi clear CursorLine
+:hi CursorLine gui=underline
+highlight CursorLine ctermbg=black guibg=black
+
 " 全角スペース, 行末半角スペースの色変え
 if has("syntax")
   syntax on
@@ -68,7 +80,6 @@ if has("syntax")
     autocmd BufNew,BufRead * call ActivateInvisibleIndicator()
   augroup ENDendif
 endif
-" }}}
 
 "――――――――――――――――――――――――――
 " 操作
@@ -109,9 +120,9 @@ set incsearch
 "編集されたら読み直す
 set autoread
 "バックアップファイルを作るディレクトリ
-set backupdir=$HOME/.vimfiles/backup
+set backupdir=~/.vim/backup
 "スワップファイル用のディレクトリ
-set directory=$HOME/.vimfiles/swap
+set directory=~/.vim/swap
 
 "――――――――――――――――――――――――――
 " マッピング
@@ -146,9 +157,29 @@ noremap <C-S-f> <ESC>gg=G
 inoremap [ []<LEFT>
 inoremap ( ()<LEFT>
 inoremap { {}<LEFT>
+inoremap < <><LEFT>
 "ビジュアルモードで選択した範囲を囲む
 vnoremap ( "zdi(<C-R>z)<ESC>
 vnoremap { "zdi{<C-R>z}<ESC>
 vnoremap [ "zdi[<C-R>z]<ESC>
 vnoremap " "zdi"<C-R>z"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
+
+
+"――――――――――――――――――――――――――
+" プラグイン
+"――――――――――――――――――――――――――
+"NERDTree
+nmap <C-e> :NERDTreeToggle<CR>
+"引数なしでvimを開いたらNERDTreeを起動、
+"引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
+"How can I open a NERDTree automatically when vim starts up if no files were specified?
+autocmd vimenter * if !argc() | NERDTree | endif
+"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
+"How can I close vim if the only window left open is a NERDTree?
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"NERDTreeShowHidden 隠しファイルを表示するか？
+"f コマンドの設定値
+"0 : 隠しファイルを表示しない。
+"1 : 隠しファイルを表示する。
+let g:NERDTreeShowHidden=1
