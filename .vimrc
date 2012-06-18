@@ -10,7 +10,7 @@
 " }}}
 ""---------------------------------------------------------------------------
 " OSごとのフォルダ設定
-if has('unix')
+if has('unix') || has('mac')
   let $DOTVIM=expand('~/.vim')
 else
   let $DOTVIM=expand('~/vimfiles')
@@ -118,7 +118,7 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 "貼り付けモードのオンオフ
-set pastetoggle=<F12>
+set pastetoggle=<F3>
 
 "――――――――――――――――――――――――――
 " 検索
@@ -138,9 +138,9 @@ set incsearch
 "編集されたら読み直す
 set autoread
 "バックアップファイルを作るディレクトリ
-set backupdir=~/$DOTVIM/backup
+set backupdir=$DOTVIM/backup
 "スワップファイル用のディレクトリ
-set directory=~/$DOTVIM/swap
+set directory=$DOTVIM/swap
 
 "――――――――――――――――――――――――――
 " マッピング
@@ -188,16 +188,10 @@ vnoremap ' "zdi'<C-R>z'<ESC>
 " プラグイン
 "――――――――――――――――――――――――――
 "NERDTree
-nmap <C-e> :NERDTreeToggle<CR>
-"引数なしでvimを開いたらNERDTreeを起動、
-"引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
-"How can I open a NERDTree automatically when vim starts up if no files were specified?
+nmap <C-e> <ESC>:NERDTreeToggle<CR>
+"引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
 autocmd vimenter * if !argc() | NERDTree | endif
 "他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
-"How can I close vim if the only window left open is a NERDTree?
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-"NERDTreeShowHidden 隠しファイルを表示するか？
-"f コマンドの設定値
-"0 : 隠しファイルを表示しない。
-"1 : 隠しファイルを表示する。
+"NERDTreeShowHidden 隠しファイルを表示する
 let g:NERDTreeShowHidden=1
