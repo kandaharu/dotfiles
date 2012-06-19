@@ -82,6 +82,11 @@ augroup END
 :hi CursorLine gui=underline
 highlight CursorLine ctermbg=black guibg=black
 
+" エンコードをUTF-8に
+set encoding=utf-8
+set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
+" LF, CR, CRLF
+set ffs=unix,mac,dos
 " 全角スペース, 行末半角スペースの色変え
 if has("syntax")
   syntax on
