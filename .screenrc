@@ -1,5 +1,5 @@
 # Prefixキーの設定
-escape ^Tt
+escape ^Rr
 # エンコーディング
 defencoding utf8
 encoding utf8 utf8
@@ -47,8 +47,10 @@ bind -c operate x eval 'remove' 'command -c operate'
 bind x remove
 bind j eval 'focus down'
 bind k eval 'focus up'
-bind h eval 'focus left'
-bind l eval 'focus right'
+bind h eval 'prev'
+bind ^h eval 'prev'
+bind l eval 'next'
+bind ^l eval 'next'
 bind + eval 'resize -v +1'
 bind - eval 'resize -v -1'
 bind > eval 'resize -h +1'
