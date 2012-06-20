@@ -10,22 +10,27 @@
 " }}}
 ""---------------------------------------------------------------------------
 " OSごとのフォルダ設定
-if has('unix') || has('mac')
-  let $DOTVIM=expand('~/.vim')
-else
+if has('win32') || has('win64')
   let $DOTVIM=expand('~/vimfiles')
+else
+  let $DOTVIM=expand('~/.vim')
 endif
 
-"――――――――――――――――――――――――――
+"——————————————————————————
 " 基本的な設定
-"――――――――――――――――――――――――――
-"カラースキーム設定
-"colorscheme torte
+"——————————————————————————
+"Windows特有の設定
+if has('win32') || has('win64')
+  "カラースキーム設定
+  "colorscheme torte
+  "マウスで選択できるようにする
+  set mouse=a
+  "ウィンドウを最大化して起動
+  au GUIEnter * simalt ~x
+end
 "vi 互換モードをオフにする
 set nocompatible
-"マウスで選択できるようにする
-set mouse=a
-"クリップボードをWindowsと連携
+"クリップボードをOSと連携
 set clipboard=+unnamed
 "ファイル形式を検出する
 filetype on
@@ -41,16 +46,17 @@ set guioptions=F
 set wildchar=<Tab>
 "変更中のファイルでも、保存しないで他のファイルを表示
 set hidden
-".txtファイルで自動的に日本語入力ON
-"au BufNewFile,BufRead *.txt set iminsert=2
+" 自動的に現在編集中のファイルのカレントディレクトリに移動
+augroup grlcd
+  autocmd!
+  autocmd BufEnter * lcd %:p:h
+augroup END
 
-"――――――――――――――――――――――――――
+"——————————————————————————
 " 表示
-"――――――――――――――――――――――――――
+"——————————————————————————
 "シンタックスを表示
 syntax on
-"ウィンドウを最大化して起動
-au GUIEnter * simalt ~x
 "行番号を表示
 set number
 "入力中のコマンドをステータスに表示
@@ -77,16 +83,15 @@ augroup cch
   autocmd WinLeave * set nocursorline
   autocmd WinEnter,BufRead * set cursorline
 augroup END
-
-:hi clear CursorLine
-:hi CursorLine gui=underline
-highlight CursorLine ctermbg=black guibg=black
-
 " エンコードをUTF-8に
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
 " LF, CR, CRLF
 set ffs=unix,mac,dos
+
+:hi clear CursorLine
+:hi CursorLine gui=underline
+highlight CursorLine ctermbg=black guibg=black
 " 全角スペース, 行末半角スペースの色変え
 if has("syntax")
   syntax on
@@ -104,9 +109,9 @@ if has("syntax")
   augroup ENDendif
 endif
 
-"――――――――――――――――――――――――――
+"——————————————————————————
 " 操作
-"――――――――――――――――――――――――――
+"——————————————————————————
 "カーソルを行頭、行末で止まらないようにする
 set whichwrap=b,s,h,l,<,>,[,]
 "バックスペースを押したときに上の行末に移動する
@@ -125,9 +130,10 @@ set shiftwidth=2
 "貼り付けモードのオンオフ
 set pastetoggle=<F3>
 
-"――――――――――――――――――――――――――
+
+"——————————————————————————
 " 検索
-"――――――――――――――――――――――――――
+"——————————————————————————
 "検索結果文字列のハイライトを有効にする
 set hlsearch
 "大文字小文字を区別なく検索する
@@ -137,9 +143,9 @@ set smartcase
 "インクリメンタルサーチ
 set incsearch
 
-"――――――――――――――――――――――――――
+"——————————————————————————
 " 保存
-"――――――――――――――――――――――――――
+"——————————————————————————
 "編集されたら読み直す
 set autoread
 "バックアップファイルを作るディレクトリ
@@ -147,9 +153,9 @@ set backupdir=$DOTVIM/backup
 "スワップファイル用のディレクトリ
 set directory=$DOTVIM/swap
 
-"――――――――――――――――――――――――――
+"——————————————————————————
 " マッピング
-"――――――――――――――――――――――――――
+"——————————————————————————
 "保存
 inoremap <C-S> <ESC>:w
 noremap <C-S> <ESC>:w
@@ -173,9 +179,9 @@ vnoremap <C-A> <ESC>gg0vG$
 "整形
 noremap <C-S-f> <ESC>gg=G
 
-"――――――――――――――――――――――――――
+"——————————————————————————
 " オートコレクト
-"――――――――――――――――――――――――――
+"——————————————————————————
 " 括弧が入力されたときに自動的に閉じ括弧を入力する
 inoremap [ []<LEFT>
 inoremap ( ()<LEFT>
@@ -189,9 +195,9 @@ vnoremap " "zdi"<C-R>z"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
 
 
-"――――――――――――――――――――――――――
+"——————————————————————————
 " プラグイン
-"――――――――――――――――――――――――――
+"——————————————————————————
 "NERDTree
 nmap <C-e> <ESC>:NERDTreeToggle<CR>
 "引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
