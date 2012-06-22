@@ -8,3 +8,5 @@
 .vim/autoload/*
 .vim/bundle
 .vim/bundle/*
+.vim/syntax
+.vim/syntax/*
