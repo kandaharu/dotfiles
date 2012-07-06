@@ -66,7 +66,7 @@ set ruler
 "折り返ししない
 set wrap! = nowrap
 "折りたたみを有効にする
-set foldmethod=syntax
+"set foldmethod=syntax
 "起動時のメッセージを表示しない
 set shortmess+=I
 "括弧の対応表示
@@ -142,6 +142,8 @@ set ignorecase
 set smartcase
 "インクリメンタルサーチ
 set incsearch
+"vimgrep の cw 自動補完
+au QuickfixCmdPost vimgrep cw
 
 "——————————————————————————
 " 保存
@@ -157,27 +159,27 @@ set directory=$DOTVIM/swap
 " マッピング
 "——————————————————————————
 "保存
-inoremap <C-S> <ESC>:w
-noremap <C-S> <ESC>:w
+inoremap <C-s> <ESC>:w
+noremap <C-s> <ESC>:w
 "表示行単位で移動
 noremap j gj
 noremap k gk
 noremap <DOWN> gj
 noremap <UP> gk
 "コピー
-vnoremap <C-C> "*y
+vnoremap <C-c> "*y
 "貼り付け
-vnoremap <C-X> "*d<ESC>
+vnoremap <C-x> "*d<ESC>
 "切り取り
-inoremap <C-V> <ESC>"*pa
-vnoremap <C-V> d"*P
-cnoremap <C-V> <C-R>*
+inoremap <C-v> <ESC>"*pa
+vnoremap <C-v> d"*P
+cnoremap <C-v> <C-R>*
 "全選択
-inoremap <C-A> <ESC>gg0vG$
-cnoremap <C-A> <ESC>gg0vG$
-vnoremap <C-A> <ESC>gg0vG$
+inoremap <C-a> <ESC>gg0vG$
+cnoremap <C-a> <ESC>gg0vG$
+vnoremap <C-a> <ESC>gg0vG$
 "整形
-noremap <C-S-f> <ESC>gg=G
+"noremap <C-S-f> <ESC>gg=G
 
 "——————————————————————————
 " オートコレクト
@@ -188,11 +190,11 @@ inoremap ( ()<LEFT>
 inoremap { {}<LEFT>
 inoremap < <><LEFT>
 "ビジュアルモードで選択した範囲を囲む
-vnoremap ( "zdi(<C-R>z)<ESC>
-vnoremap { "zdi{<C-R>z}<ESC>
-vnoremap [ "zdi[<C-R>z]<ESC>
-vnoremap " "zdi"<C-R>z"<ESC>
-vnoremap ' "zdi'<C-R>z'<ESC>
+vnoremap ( "zdi(<C-r>z)<ESC>
+vnoremap { "zdi{<C-r>z}<ESC>
+vnoremap [ "zdi[<C-r>z]<ESC>
+vnoremap " "zdi"<C-r>z"<ESC>
+vnoremap ' "zdi'<C-r>z'<ESC>
 
 
 "——————————————————————————

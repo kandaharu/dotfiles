@@ -1,5 +1,5 @@
 # Prefixキーの設定
-escape ^Rr
+escape ^Tt
 # エンコーディング
 defencoding utf8
 encoding utf8 utf8
