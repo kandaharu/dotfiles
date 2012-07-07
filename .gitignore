@@ -9,3 +9,5 @@
 .vim/bundle
 .vim/bundle/*
 .vim/.netrwhist
+.vim/syntax
+.vim/syntax/*
