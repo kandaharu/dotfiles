@@ -22,7 +22,7 @@ endif
 "Windows特有の設定
 if has('win32') || has('win64')
   "カラースキーム設定
-  "colorscheme torte
+  colorscheme torte
   "マウスで選択できるようにする
   set mouse=a
   "ウィンドウを最大化して起動
@@ -184,11 +184,12 @@ vnoremap <C-a> <ESC>gg0vG$
 "——————————————————————————
 " オートコレクト
 "——————————————————————————
-" 括弧が入力されたときに自動的に閉じ括弧を入力する
 inoremap [ []<LEFT>
 inoremap ( ()<LEFT>
 inoremap { {}<LEFT>
 inoremap < <><LEFT>
+inoremap ' ''<LEFT>
+inoremap " ""<LEFT>
 "ビジュアルモードで選択した範囲を囲む
 vnoremap ( "zdi(<C-r>z)<ESC>
 vnoremap { "zdi{<C-r>z}<ESC>
