@@ -12,7 +12,7 @@ shell $SHELL
 # スタートアップメッセージを消す
 startup_message off
 # ウィンドウのタイトル指定
-shelltitle '$ |bash'
+shelltitle '$ | screen'
 #メッセージを表示する時間(秒単位)
 #msgwait 5
 #次のメッセージを表示するまでの遅延時間(秒単位)
