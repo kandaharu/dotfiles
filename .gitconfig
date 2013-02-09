@@ -1,0 +1,12 @@
+[user]
+	name = kandaharu
+	email = yuugengaisha@gmail.com
+[color]
+	ui = true
+	branch = auto
+	diff = auto
+	status = auto
+	interactive = auto
+[alias]
+	decolog = log --graph --decorate --branches --oneline
+  prettylog = log --graph --decorate --branches --pretty=short
