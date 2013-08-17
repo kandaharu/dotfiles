@@ -1,12 +1,19 @@
 [user]
-	name = kandaharu
-	email = yuugengaisha@gmail.com
+  name = kandaharu
+  email = yuugengaisha@gmail.com
 [color]
-	ui = true
-	branch = auto
-	diff = auto
-	status = auto
-	interactive = auto
+  ui = true
+  branch = auto
+  diff = auto
+  status = auto
+  interactive = auto
 [alias]
-	decolog = log --graph --decorate --branches --oneline
+  decolog = log --graph --decorate --branches --oneline
   prettylog = log --graph --decorate --branches --pretty=short
+  co = checkout
+  comaster = checkout master
+  cowork = checkout workspace
+  reb = rebase
+  rebco = rebase copy
+  rebwork = rebase workspace
+  rebmaster = rebase master

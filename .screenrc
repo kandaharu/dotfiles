@@ -59,3 +59,10 @@ bind v eval 'split -v' focus screen
 bind s eval 'split' focus screen
 bind = eval 'resize -v ='
 bind + eval 'resize -h +'
+
+bind ^J eval 'focus down' 'command -c cfocus'
+bind ^K eval 'focus up'   'command -c cfocus'
+bind -c cfocus ^J eval 'focus down'   'command -c cfocus'
+bind -c cfocus ^K eval 'focus up'     'command -c cfocus'
+bind -c cfocus ^T eval 'focus top'    'command -c cfocus'
+bind -c cfocus ^B eval 'focus bottom' 'command -c cfocus'
