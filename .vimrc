@@ -32,12 +32,6 @@ end
 set nocompatible
 "クリップボードをOSと連携
 set clipboard=+unnamed
-"ファイル形式を検出する
-filetype on
-"ファイル形式別インデントのロードをオンにする
-filetype indent on
-"ファイルタイププラグインを有効にする
-filetype plugin on
 "ビープ音をならさない
 set vb t_vb=
 "GUIオプション
@@ -233,7 +227,16 @@ NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/Shougo/vinarise.git'
 NeoBundle 'romanvbabenko/rails.vim'
 
-filetype plugin on
+"CoffeeScript
+NeoBundle 'kchmck/vim-coffee-script' "syntax + 自動compile
+NeoBundle 'claco/jasmine.vim' " js BDDツール
+NeoBundle 'nathanaelkane/vim-indent-guides' " indentの深さに色を付ける
+
+"ファイル形式を検出する
+filetype on
+"ファイル形式別インデントのロードをオンにする
 filetype indent on
+"ファイルタイププラグインを有効にする
+filetype plugin on
 
 NeoBundleCheck
