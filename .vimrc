@@ -3,39 +3,34 @@
 "---------------------------------------------------------------------------
 
 "---------------------------------------------------------------------------
-" メモ {{{
+" メモ
 "
 " 使用前提
 " ・.vim or vimfile 直下にswap,backup,snippetsディレクトリを作成しておく
-" }}}
 ""---------------------------------------------------------------------------
+
+"——————————————————————————
 " OSごとのフォルダ設定
+"——————————————————————————
 if has('win32') || has('win64')
   let $DOTVIM=expand('~/vimfiles')
+  let $BUNDLEDIR=expand('~/vimfiles/bundle')
 else
   let $DOTVIM=expand('~/.vim')
+  let $BUNDLEDIR=expand('~/.vim/bundle')
 endif
 
 "——————————————————————————
 " 基本的な設定
 "——————————————————————————
-"Windows特有の設定
-if has('win32') || has('win64')
-  "カラースキーム設定
-  colorscheme torte
-  "マウスで選択できるようにする
-  set mouse=a
-  "ウィンドウを最大化して起動
-  au GUIEnter * simalt ~x
-end
+"マウスで選択できるようにする
+set mouse=a
 "vi 互換モードをオフにする
 set nocompatible
 "クリップボードをOSと連携
 set clipboard=+unnamed
 "ビープ音をならさない
 set vb t_vb=
-"GUIオプション
-set guioptions=F
 "Tabで補完できるようにする
 set wildchar=<Tab>
 "変更中のファイルでも、保存しないで他のファイルを表示
@@ -83,9 +78,6 @@ set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
 " LF, CR, CRLF
 set ffs=unix,mac,dos
 
-:hi clear CursorLine
-:hi CursorLine gui=underline
-highlight CursorLine ctermbg=black guibg=black
 " 全角スペース, 行末半角スペースの色変え
 if has("syntax")
   syntax on
@@ -101,6 +93,10 @@ if has("syntax")
     autocmd! invisible
     autocmd BufNew,BufRead * call ActivateInvisibleIndicator()
   augroup ENDendif
+endif
+" UTF-8の□や○でカーソル位置がずれないようにする
+if exists('&ambiwidth')
+  set ambiwidth=double
 endif
 
 "——————————————————————————
@@ -123,7 +119,6 @@ set softtabstop=2
 set shiftwidth=2
 "貼り付けモードのオンオフ
 set pastetoggle=<F3>
-
 
 "——————————————————————————
 " 検索
@@ -195,16 +190,7 @@ vnoremap ' "zdi'<C-r>z'<ESC>
 "——————————————————————————
 " プラグイン
 "——————————————————————————
-"NERDTree
-nmap <C-e> <ESC>:NERDTreeToggle<CR>
-"引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
-autocmd vimenter * if !argc() | NERDTree | endif
-"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-"NERDTreeShowHidden 隠しファイルを表示する
-let g:NERDTreeShowHidden=1
-
-"NeoBundle
+"== NeoBundle
 set nocompatible
 filetype off
 
@@ -212,12 +198,12 @@ if has('vim_starting')
   set runtimepath+=$DOTVIM/bundle/neobundle.vim
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#rc($BUNDLEDIR)
 
-" Let NeoBundle manage NeoBundle
+"Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle 'git://github.com/Shougo/echodoc.git'
+"=== Vim
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
@@ -225,12 +211,19 @@ NeoBundle 'git://github.com/Shougo/vim-vcs.git'
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/Shougo/vinarise.git'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'bling/vim-airline'
+
+"=== Ruby/Rails
 NeoBundle 'romanvbabenko/rails.vim'
 
-"CoffeeScript
-NeoBundle 'kchmck/vim-coffee-script' "syntax + 自動compile
-NeoBundle 'claco/jasmine.vim' " js BDDツール
-NeoBundle 'nathanaelkane/vim-indent-guides' " indentの深さに色を付ける
+"=== CoffeeScript
+"syntax + 自動compile
+NeoBundle 'kchmck/vim-coffee-script'
+"js BDDツール
+NeoBundle 'claco/jasmine.vim'
+"indentの深さに色を付ける
+NeoBundle 'nathanaelkane/vim-indent-guides'
 
 "ファイル形式を検出する
 filetype on
@@ -238,5 +231,16 @@ filetype on
 filetype indent on
 "ファイルタイププラグインを有効にする
 filetype plugin on
+syntax on
 
 NeoBundleCheck
+
+
+"== NERDTree
+nmap <C-e> <ESC>:NERDTreeToggle<CR>
+"引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
+"autocmd vimenter * if !argc() | NERDTree | endif
+"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"NERDTreeShowHidden 隠しファイルを表示する
+"let g:NERDTreeShowHidden=1
