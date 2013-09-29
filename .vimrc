@@ -186,11 +186,10 @@ vnoremap [ "zdi[<C-r>z]<ESC>
 vnoremap " "zdi"<C-r>z"<ESC>
 vnoremap ' "zdi'<C-r>z'<ESC>
 
-
 "——————————————————————————
 " プラグイン
 "——————————————————————————
-"== NeoBundle
+"= NeoBundle
 set nocompatible
 filetype off
 
@@ -203,16 +202,22 @@ call neobundle#rc($BUNDLEDIR)
 "Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-"=== Vim
-NeoBundle 'git://github.com/Shougo/neocomplcache.git'
-NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'git://github.com/Shougo/vim-vcs.git'
-NeoBundle 'git://github.com/Shougo/vimfiler.git'
-NeoBundle 'git://github.com/Shougo/vimshell.git'
-NeoBundle 'git://github.com/Shougo/vinarise.git'
-NeoBundle 'scrooloose/nerdtree'
+"== Vim
+NeoBundle 'Shougo/neocomplcache.git'
+NeoBundle 'Shougo/neobundle.vim.git'
+NeoBundle 'Shougo/vim-vcs.git'
+NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'Shougo/vinarise.git'
 NeoBundle 'bling/vim-airline'
+NeoBundle 'Shougo/unite.vim.git'
+
+"=== ColorScheme
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'tomasr/molokai'
+
+"=== Filer
+NeoBundle 'Shougo/vimfiler.git'
+nmap <C-h> <ESC>:VimFiler<CR>
 
 "=== Ruby/Rails
 NeoBundle 'romanvbabenko/rails.vim'
@@ -225,6 +230,16 @@ NeoBundle 'claco/jasmine.vim'
 "indentの深さに色を付ける
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
+"=== NERDTree
+NeoBundle 'scrooloose/nerdtree'
+nmap <C-e> <ESC>:NERDTreeToggle<CR>
+"引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
+"autocmd vimenter * if !argc() | NERDTree | endif
+"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"NERDTreeShowHidden 隠しファイルを表示する
+"let g:NERDTreeShowHidden=1
+
 "ファイル形式を検出する
 filetype on
 "ファイル形式別インデントのロードをオンにする
@@ -234,13 +249,3 @@ filetype plugin on
 syntax on
 
 NeoBundleCheck
-
-
-"== NERDTree
-nmap <C-e> <ESC>:NERDTreeToggle<CR>
-"引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
-"autocmd vimenter * if !argc() | NERDTree | endif
-"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-"NERDTreeShowHidden 隠しファイルを表示する
-"let g:NERDTreeShowHidden=1

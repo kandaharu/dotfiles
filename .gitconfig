@@ -2,7 +2,7 @@
   name = kandaharu
   email = yuugengaisha@gmail.com
 [color]
-  ui = true
+  ui = auto
   branch = auto
   diff = auto
   status = auto
@@ -17,3 +17,4 @@
   rebco = rebase copy
   rebwork = rebase workspace
   rebmaster = rebase master
+  st = status

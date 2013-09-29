@@ -14,7 +14,7 @@ else
   "ウィンドウを適当な大きさにして起動
   au GUIEnter * winsize 255 80
   "カラースキーム設定
-  colorscheme torte
+  colorscheme molokai
   set guioptions+=T
 endif
 
