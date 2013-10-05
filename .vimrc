@@ -38,7 +38,7 @@ set hidden
 " 自動的に現在編集中のファイルのカレントディレクトリに移動
 augroup grlcd
   autocmd!
-  autocmd BufEnter * lcd %:p:h
+  "autocmd BufEnter * lcd %:p:h
 augroup END
 
 "——————————————————————————
@@ -194,30 +194,59 @@ set nocompatible
 filetype off
 
 if has('vim_starting')
-  set runtimepath+=$DOTVIM/bundle/neobundle.vim
+  set runtimepath+=$BUNDLEDIR/neobundle.vim
 endif
 
 call neobundle#rc($BUNDLEDIR)
-
 "Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 "== Vim
-NeoBundle 'Shougo/neocomplcache.git'
-NeoBundle 'Shougo/neobundle.vim.git'
-NeoBundle 'Shougo/vim-vcs.git'
-NeoBundle 'Shougo/vimshell.git'
-NeoBundle 'Shougo/vinarise.git'
+"NeoBundle 'Shougo/neocomplcache.git'
+"NeoBundle 'Shougo/vim-vcs.git'
+"NeoBundle 'Shougo/vimshell.git'
+"NeoBundle 'Shougo/vinarise.git'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'bling/vim-airline'
-NeoBundle 'Shougo/unite.vim.git'
 
 "=== ColorScheme
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'tomasr/molokai'
 
-"=== Filer
-NeoBundle 'Shougo/vimfiler.git'
-nmap <C-h> <ESC>:VimFiler<CR>
+"=== Unite
+NeoBundleLazy 'Shougo/unite.vim' , {
+\   'autoload' : { 'commands' : [ 'Unite' ] }
+\ }
+"let s:bundle = neobundle#get('unite.vim')
+"function! s:bundle.hooks.on_source(bundle)
+"  " ココにunite.vimの設定とか記述する。
+"endfunction
+"unlet s:bundle
+
+nmap <C-h>u <ESC>:Unite file_mru file buffer<CR>
+nmap <C-h><C-u> <ESC>:Unite file_mru file buffer<CR>
+
+"=== VimFiler
+NeoBundle 'Shougo/vimfiler', {
+\   'autoload' : { 'commands' : [ 'VimFiler', 'VimFilerSimple',  'VimFilerCurrentDir', 'VimFilerBufferDir' ] },
+\   'depends': [ 'Shougo/unite.vim' ],
+\ }
+"let s:bundle = neobundle#get('vimfiler')
+"function! s:bundle.hooks.on_source(bundle)
+"  " ココにvimfilerの設定とか記述する。
+"endfunction
+"unlet s:bundle
+nmap <C-h>f <ESC>:VimFilerSimple<CR>
+nmap <C-h><C-f> <ESC>:VimFilerSimple<CR>
+
+"=== Git
+NeoBundleLazy 'gregsexton/gitv', {
+\   'autoload' : { 'commands' : [ 'Gitv', 'Gitv!' ] }
+\ }
+nmap <C-h>gb <ESC>:Gitv<CR>
+nmap <C-h><C-g><C-b> <ESC>:Gitv<CR>
+nmap <C-h>gf <ESC>:Gitv!<CR>
+nmap <C-h><C-g><C-f> <ESC>:Gitv!<CR>
 
 "=== Ruby/Rails
 NeoBundle 'romanvbabenko/rails.vim'
@@ -231,14 +260,20 @@ NeoBundle 'claco/jasmine.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
 "=== NERDTree
-NeoBundle 'scrooloose/nerdtree'
-nmap <C-e> <ESC>:NERDTreeToggle<CR>
-"引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
-"autocmd vimenter * if !argc() | NERDTree | endif
-"他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-"NERDTreeShowHidden 隠しファイルを表示する
-"let g:NERDTreeShowHidden=1
+"NeoBundleLazy 'scrooloose/nerdtree', {
+"\ 'autoload' : { 'commands' : ['NerdTreeToggle'] }
+"}
+"let s:bundle = neobundle#get('nerdtree')
+"function! s:bundle.hooks.on_source(bundle)
+"   引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
+"   autocmd vimenter * if !argc() | NERDTree | endif
+"   他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
+"   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"   "NERDTreeShowHidden 隠しファイルを表示する
+"   "let g:NERDTreeShowHidden=1
+"endfunction
+"unlet s:bundle
+"nmap <C-e> <ESC>:NERDTreeToggle<CR>
 
 "ファイル形式を検出する
 filetype on

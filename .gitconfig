@@ -18,3 +18,5 @@
   rebwork = rebase workspace
   rebmaster = rebase master
   st = status
+[core]
+  editor = 'vim' -c 'set fileencoding=utf-8'

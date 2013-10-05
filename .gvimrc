@@ -27,6 +27,6 @@ set guioptions=+F
 "——————————————————————————
 " 表示
 "——————————————————————————
-:hi clear CursorLine
-:hi CursorLine gui=underline
+hi clear CursorLine
+"hi CursorLine gui=underline
 highlight CursorLine ctermbg=black guibg=black
