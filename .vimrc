@@ -38,7 +38,7 @@ set hidden
 " 自動的に現在編集中のファイルのカレントディレクトリに移動
 augroup grlcd
   autocmd!
-  "autocmd BufEnter * lcd %:p:h
+  autocmd BufEnter * execute ":silent! lcd" . expand("%:p:h")
 augroup END
 
 "——————————————————————————
@@ -103,7 +103,7 @@ endif
 " 操作
 "——————————————————————————
 "カーソルを行頭、行末で止まらないようにする
-set whichwrap=b,s,h,l,<,>,[,]
+set whichwrap=b,s,h,l,<,>,[,],,~
 "バックスペースを押したときに上の行末に移動する
 set backspace=2
 "自動インデント
@@ -155,6 +155,25 @@ noremap j gj
 noremap k gk
 noremap <DOWN> gj
 noremap <UP> gk
+"タブをscreenrcっぽくする
+noremap <C-t><C-c> :tabe<CR>
+noremap <C-t>c :tabe<CR>
+noremap <C-t><C-2> :new<CR>
+noremap <C-t>2 :new<CR>
+noremap <C-t><C-j> <C-w><C-j>
+noremap <C-t>j <C-w><C-j>
+noremap <C-t><C-k> <C-w><C-k>
+noremap <C-t>k <C-w><C-k>
+noremap <C-t>2 :new<CR>
+noremap <C-t><C-h> gT
+noremap <C-t>h gT
+noremap <C-t><C-l> gt
+noremap <C-t>l gt
+"ついでにWindowのほうもscreenっぽく
+noremap <C-w><C-c> :vnew<CR>
+noremap <C-w>c :vnew<CR>
+noremap <C-w><C-v> :new<CR>
+noremap <C-w>v :new<CR>
 "コピー
 vnoremap <C-c> "*y
 "貼り付け
@@ -167,6 +186,7 @@ cnoremap <C-v> <C-R>*
 inoremap <C-a> <ESC>gg0vG$
 cnoremap <C-a> <ESC>gg0vG$
 vnoremap <C-a> <ESC>gg0vG$
+nnoremap <C-a> <ESC>gg0vG$
 "整形
 "noremap <C-S-f> <ESC>gg=G
 
@@ -207,7 +227,13 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 "NeoBundle 'Shougo/vimshell.git'
 "NeoBundle 'Shougo/vinarise.git'
 NeoBundle 'tpope/vim-fugitive'
+
 NeoBundle 'bling/vim-airline'
+let s:bundle = neobundle#get('vim-airline')
+function! s:bundle.hooks.on_source(bundle)
+  let g:airline#extensions#tabline#enabled = 1
+endfunction
+unlet s:bundle
 
 "=== ColorScheme
 NeoBundle 'ujihisa/unite-colorscheme'
@@ -243,6 +269,12 @@ nmap <C-h><C-f> <ESC>:VimFilerSimple<CR>
 NeoBundleLazy 'gregsexton/gitv', {
 \   'autoload' : { 'commands' : [ 'Gitv', 'Gitv!' ] }
 \ }
+let s:bundle = neobundle#get('gitv')
+function! s:bundle.hooks.on_source(bundle)
+  highlight diffAdded guifg=#00bf00
+  highlight diffRemoved guifg=#bf0000
+endfunction
+unlet s:bundle
 nmap <C-h>gb <ESC>:Gitv<CR>
 nmap <C-h><C-g><C-b> <ESC>:Gitv<CR>
 nmap <C-h>gf <ESC>:Gitv!<CR>

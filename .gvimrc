@@ -28,5 +28,8 @@ set guioptions=+F
 " 表示
 "——————————————————————————
 hi clear CursorLine
-"hi CursorLine gui=underline
-highlight CursorLine ctermbg=black guibg=black
+set cursorline
+" アンダーラインを引く(color terminal)
+highlight CursorLine cterm=NONE ctermbg=black
+" アンダーラインを引く(gui)
+highlight CursorLine gui=NONE guibg=#333333
