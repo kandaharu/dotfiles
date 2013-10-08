@@ -222,9 +222,7 @@ call neobundle#rc($BUNDLEDIR)
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 "== Vim
-"NeoBundle 'Shougo/neocomplcache.git'
 "NeoBundle 'Shougo/vim-vcs.git'
-"NeoBundle 'Shougo/vimshell.git'
 "NeoBundle 'Shougo/vinarise.git'
 NeoBundle 'tpope/vim-fugitive'
 
@@ -249,12 +247,14 @@ NeoBundleLazy 'Shougo/unite.vim' , {
 "endfunction
 "unlet s:bundle
 
-nmap <C-h>u <ESC>:Unite file_mru file buffer<CR>
-nmap <C-h><C-u> <ESC>:Unite file_mru file buffer<CR>
+nmap <C-h>uu <ESC>:Unite file_mru buffer file<CR>
+nmap <C-h><C-u><C-u> <ESC>:Unite file_mru buffer file<CR>
+nmap <C-h>uh <ESC>:Unite history/yank<CR>
+nmap <C-h><C-u><C-h> <ESC>:Unite history/yank<CR>
 
 "=== VimFiler
 NeoBundle 'Shougo/vimfiler', {
-\   'autoload' : { 'commands' : [ 'VimFiler', 'VimFilerSimple',  'VimFilerCurrentDir', 'VimFilerBufferDir' ] },
+\   'autoload' : { 'commands' : [ 'VimFiler', 'VimFilerSimple',  'VimFilerExplorer',  'VimFilerCurrentDir', 'VimFilerBufferDir' ] },
 \   'depends': [ 'Shougo/unite.vim' ],
 \ }
 "let s:bundle = neobundle#get('vimfiler')
@@ -262,8 +262,14 @@ NeoBundle 'Shougo/vimfiler', {
 "  " ココにvimfilerの設定とか記述する。
 "endfunction
 "unlet s:bundle
-nmap <C-h>f <ESC>:VimFilerSimple<CR>
-nmap <C-h><C-f> <ESC>:VimFilerSimple<CR>
+nmap <C-h>ff <ESC>:VimFilerSimple<CR>
+nmap <C-h><C-f><C-f> <ESC>:VimFilerSimple<CR>
+nmap <C-h>fe <ESC>:VimFilerExplorer<CR>
+nmap <C-h><C-f><C-e> <ESC>:VimFilerExplorer<CR>
+
+"=== neocomplecache
+NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'Shougo/neocomplcache.git'
 
 "=== Git
 NeoBundleLazy 'gregsexton/gitv', {
@@ -281,7 +287,13 @@ nmap <C-h>gf <ESC>:Gitv!<CR>
 nmap <C-h><C-g><C-f> <ESC>:Gitv!<CR>
 
 "=== Ruby/Rails
-NeoBundle 'romanvbabenko/rails.vim'
+NeoBundleLazy 'romanvbabenko/rails.vim'
+
+"=== HTML/CSS/JavaScript/Sass
+NeoBundleLazy 'taichouchou2/html5.vim'
+NeoBundleLazy 'hail2u/vim-css3-syntax'
+NeoBundleLazy 'taichouchou2/vim-javascript'
+NeoBundleLazy 'kchmck/vim-coffee-script'
 
 "=== CoffeeScript
 "syntax + 自動compile
