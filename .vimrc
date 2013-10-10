@@ -241,16 +241,47 @@ NeoBundle 'tomasr/molokai'
 NeoBundleLazy 'Shougo/unite.vim' , {
 \   'autoload' : { 'commands' : [ 'Unite' ] }
 \ }
-"let s:bundle = neobundle#get('unite.vim')
-"function! s:bundle.hooks.on_source(bundle)
-"  " ココにunite.vimの設定とか記述する。
-"endfunction
-"unlet s:bundle
+let s:bundle = neobundle#get('unite.vim')
+function! s:bundle.hooks.on_source(bundle)
+  "インサートモードで開始しない
+  let g:unite_enable_start_insert = 0
+  "bookmarkだけホームディレクトリに保存
+  let g:unite_source_bookmark_directory = $HOME . '/.unite/bookmark'"
+  "file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
+  let g:unite_source_file_mru_filename_format = ''
 
-nmap <C-h>uu <ESC>:Unite file_mru buffer file<CR>
-nmap <C-h><C-u><C-u> <ESC>:Unite file_mru buffer file<CR>
-nmap <C-h>uh <ESC>:Unite history/yank<CR>
-nmap <C-h><C-u><C-h> <ESC>:Unite history/yank<CR>
+  "uniteを開いている間のキーマッピング
+  augroup vimrc
+    autocmd FileType unite call s:unite_my_settings()
+  augroup END
+
+  function! s:unite_my_settings()
+    "ESCでuniteを終了
+    "nmap <buffer> <ESC> <Plug>(unite_exit)
+    "入力モードのときjjでノーマルモードに移動
+    imap <buffer> jj <Plug>(unite_insert_leave)
+    "sでsplit
+    nnoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
+    inoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
+    "vでvsplit
+    nnoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
+    inoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
+    "fでvimfiler
+    nnoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+    inoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+  endfunction
+endfunction
+unlet s:bundle
+
+"unite prefix key.
+nnoremap [unite] <NOP>
+nmap <C-h> [unite]
+nmap [unite]u <ESC>:Unite file_mru buffer file<CR>
+nmap [unite]<C-u> <ESC>:Unite file_mru buffer file<CR>
+nmap [unite]h <ESC>:Unite history/yank<CR>
+nmap [unite]<C-h> <ESC>:Unite history/yank<CR>
+nmap [unite]b <ESC>:Unite bookmark<CR>
+nmap [unite]<C-b> <ESC>:Unite bookmark<CR>
 
 "=== VimFiler
 NeoBundle 'Shougo/vimfiler', {
@@ -262,10 +293,11 @@ NeoBundle 'Shougo/vimfiler', {
 "  " ココにvimfilerの設定とか記述する。
 "endfunction
 "unlet s:bundle
-nmap <C-h>ff <ESC>:VimFilerSimple<CR>
-nmap <C-h><C-f><C-f> <ESC>:VimFilerSimple<CR>
-nmap <C-h>fe <ESC>:VimFilerExplorer<CR>
-nmap <C-h><C-f><C-e> <ESC>:VimFilerExplorer<CR>
+nmap [unite]f <ESC>:VimFilerSimple -split -simple -winwidth=35 -no-quit<CR>
+nmap [unite]<C-f> <ESC>:VimFilerSimple -split -simple -winwidth=35 -no-quit<CR>
+nmap [unite]e <ESC>:VimFilerExplorer<CR>
+nmap [unite]<C-e> <ESC>:VimFilerExplorer<CR>
+
 
 "=== neocomplecache
 NeoBundle 'Shougo/vimshell.git'
