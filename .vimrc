@@ -64,8 +64,6 @@ set showmatch
 set list
 "tab文字やEOLを表示
 set lcs=tab:^\ ,eol:<,extends:>
-"カーソル行をハイライト
-set cursorline
 " カレントウィンドウにのみ罫線を引く
 augroup cch
   autocmd! cch
@@ -149,31 +147,31 @@ set directory=$DOTVIM/swap
 "——————————————————————————
 "保存
 inoremap <C-s> <ESC>:w
-noremap <C-s> <ESC>:w
+noremap  <C-s> <ESC>:w
 "表示行単位で移動
 noremap j gj
 noremap k gk
 noremap <DOWN> gj
 noremap <UP> gk
 "タブをscreenrcっぽくする
-noremap <C-t><C-c> :tabe<CR>
-noremap <C-t>c :tabe<CR>
-noremap <C-t><C-2> :new<CR>
-noremap <C-t>2 :new<CR>
-noremap <C-t><C-j> <C-w><C-j>
-noremap <C-t>j <C-w><C-j>
-noremap <C-t><C-k> <C-w><C-k>
-noremap <C-t>k <C-w><C-k>
-noremap <C-t>2 :new<CR>
-noremap <C-t><C-h> gT
-noremap <C-t>h gT
-noremap <C-t><C-l> gt
-noremap <C-t>l gt
+noremap <C-t><C-c>  :tabe<CR>
+noremap <C-t>c      :tabe<CR>
+noremap <C-t><C-2>  :new<CR>
+noremap <C-t>2      :new<CR>
+noremap <C-t><C-j>  <C-w><C-j>
+noremap <C-t>j      <C-w><C-j>
+noremap <C-t><C-k>  <C-w><C-k>
+noremap <C-t>k      <C-w><C-k>
+noremap <C-t>2      :new<CR>
+noremap <C-t><C-h>  gT
+noremap <C-t>h      gT
+noremap <C-t><C-l>  gt
+noremap <C-t>l      gt
 "ついでにWindowのほうもscreenっぽく
-noremap <C-w><C-c> :vnew<CR>
-noremap <C-w>c :vnew<CR>
-noremap <C-w><C-v> :new<CR>
-noremap <C-w>v :new<CR>
+noremap <C-w><C-c>  :vnew<CR>
+noremap <C-w>c      :vnew<CR>
+noremap <C-w><C-v>  :new<CR>
+noremap <C-w>v      :new<CR>
 "コピー
 vnoremap <C-c> "*y
 "貼り付け
@@ -256,8 +254,9 @@ function! s:bundle.hooks.on_source(bundle)
   augroup END
 
   function! s:unite_my_settings()
+    autocmd FileType vimfiler call unite#custom_default_action('directory', 'lcd')
     "ESCでuniteを終了
-    "nmap <buffer> <ESC> <Plug>(unite_exit)
+    nmap <buffer> <ESC> <Plug>(unite_exit)
     "入力モードのときjjでノーマルモードに移動
     imap <buffer> jj <Plug>(unite_insert_leave)
     "sでsplit
@@ -276,11 +275,11 @@ unlet s:bundle
 "unite prefix key.
 nnoremap [unite] <NOP>
 nmap <C-h> [unite]
-nmap [unite]u <ESC>:Unite file_mru buffer file<CR>
+nmap [unite]u     <ESC>:Unite file_mru buffer file<CR>
 nmap [unite]<C-u> <ESC>:Unite file_mru buffer file<CR>
-nmap [unite]h <ESC>:Unite history/yank<CR>
-nmap [unite]<C-h> <ESC>:Unite history/yank<CR>
-nmap [unite]b <ESC>:Unite bookmark<CR>
+nmap [unite]y     <ESC>:Unite history/yank<CR>
+nmap [unite]<C-y> <ESC>:Unite history/yank<CR>
+nmap [unite]b     <ESC>:Unite bookmark<CR>
 nmap [unite]<C-b> <ESC>:Unite bookmark<CR>
 
 "=== VimFiler
@@ -288,16 +287,23 @@ NeoBundle 'Shougo/vimfiler', {
 \   'autoload' : { 'commands' : [ 'VimFiler', 'VimFilerSimple',  'VimFilerExplorer',  'VimFilerCurrentDir', 'VimFilerBufferDir' ] },
 \   'depends': [ 'Shougo/unite.vim' ],
 \ }
-"let s:bundle = neobundle#get('vimfiler')
-"function! s:bundle.hooks.on_source(bundle)
-"  " ココにvimfilerの設定とか記述する。
-"endfunction
-"unlet s:bundle
-nmap [unite]f <ESC>:VimFilerSimple -split -simple -winwidth=35 -no-quit<CR>
-nmap [unite]<C-f> <ESC>:VimFilerSimple -split -simple -winwidth=35 -no-quit<CR>
-nmap [unite]e <ESC>:VimFilerExplorer<CR>
-nmap [unite]<C-e> <ESC>:VimFilerExplorer<CR>
+let s:bundle = neobundle#get('vimfiler')
+function! s:bundle.hooks.on_source(bundle)
+endfunction
+unlet s:bundle
+nmap [unite]f     <ESC>:VimFilerCurrentDir -split -simple<CR>
+nmap [unite]<C-f> <ESC>:VimFilerCurrentDir -split -simple<CR>
 
+"=== コメントアウト
+NeoBundle 'tomtom/tcomment_vim'
+let s:bundle = neobundle#get('tcomment_vim')
+function! s:bundle.hooks.on_source(bundle)
+  let g:tcommentMapLeader1 = '<C-/>'
+  let g:tcommentMapLeader2 = '<Leader>'
+  let g:tcommentMapLeaderOp1 = 'gc'
+  let g:tcommentMapLeaderOp2 = 'gC'
+endfunction
+unlet s:bundle
 
 "=== neocomplecache
 NeoBundle 'Shougo/vimshell.git'
@@ -313,19 +319,22 @@ function! s:bundle.hooks.on_source(bundle)
   highlight diffRemoved guifg=#bf0000
 endfunction
 unlet s:bundle
-nmap <C-h>gb <ESC>:Gitv<CR>
-nmap <C-h><C-g><C-b> <ESC>:Gitv<CR>
-nmap <C-h>gf <ESC>:Gitv!<CR>
-nmap <C-h><C-g><C-f> <ESC>:Gitv!<CR>
+
+nnoremap [gitv] <NOP>
+nmap <C-g> [gitv]
+nmap [gitv]b      <ESC>:Gitv<CR>
+nmap [gitv]<C-b>  <ESC>:Gitv<CR>
+nmap [gitv]f      <ESC>:Gitv!<CR>
+nmap [gitv]<C-f>  <ESC>:Gitv!<CR>
 
 "=== Ruby/Rails
 NeoBundleLazy 'romanvbabenko/rails.vim'
 
 "=== HTML/CSS/JavaScript/Sass
-NeoBundleLazy 'taichouchou2/html5.vim'
-NeoBundleLazy 'hail2u/vim-css3-syntax'
-NeoBundleLazy 'taichouchou2/vim-javascript'
-NeoBundleLazy 'kchmck/vim-coffee-script'
+NeoBundle 'taichouchou2/html5.vim'
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'taichouchou2/vim-javascript'
+NeoBundle 'kchmck/vim-coffee-script'
 
 "=== CoffeeScript
 "syntax + 自動compile

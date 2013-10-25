@@ -3,20 +3,11 @@
   email = yuugengaisha@gmail.com
 [color]
   ui = auto
-  branch = auto
-  diff = auto
-  status = auto
-  interactive = auto
 [alias]
   decolog = log --graph --decorate --branches --oneline
   prettylog = log --graph --decorate --branches --pretty=short
   co = checkout
-  comaster = checkout master
-  cowork = checkout workspace
   reb = rebase
-  rebco = rebase copy
-  rebwork = rebase workspace
-  rebmaster = rebase master
   st = status
 [core]
   editor = 'vim' -c 'set fileencoding=utf-8'
