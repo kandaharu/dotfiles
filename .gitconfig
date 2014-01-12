@@ -11,3 +11,7 @@
   st = status
 [core]
   editor = 'vim' -c 'set fileencoding=utf-8'
+[pager]
+  log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
