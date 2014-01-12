@@ -33,3 +33,5 @@ set cursorline
 highlight CursorLine cterm=NONE ctermbg=black
 " アンダーラインを引く(gui)
 highlight CursorLine gui=NONE guibg=#333333
+"フォントの設定
+set guifont=Ricty:h14
