@@ -1,17 +1,27 @@
 [user]
-  name = kandaharu
-  email = yuugengaisha@gmail.com
+	name = kandaharu
+	email = yuugengaisha@gmail.com
 [color]
-  ui = auto
+	ui = auto
 [alias]
-  decolog = log --graph --decorate --branches --oneline
-  prettylog = log --graph --decorate --branches --pretty=short
-  co = checkout
-  reb = rebase
-  st = status
+	decolog = log --graph --decorate --branches --oneline
+	prettylog = log --graph --decorate --branches --pretty=short
+	co = checkout
+	ci = commit
+	reb = rebase
+	st = status
+	df = diff
+	br = branch
+	ff = flow feature
+	fh = flow hotfix
+	fr = flow release
 [core]
-  editor = 'vim' -c 'set fileencoding=utf-8'
+	editor = 'vim' -c 'set fileencoding=utf-8'
 [pager]
-  log = diff-highlight | less
-  show = diff-highlight | less
-  diff = diff-highlight | less
+	log = diff-highlight | less
+	show = diff-highlight | less
+	diff = diff-highlight | less
+[merge]
+	ff = false
+[pull]
+	rebase = true
