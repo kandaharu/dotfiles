@@ -351,20 +351,21 @@ NeoBundle 'claco/jasmine.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
 "=== NERDTree
-NeoBundleLazy 'scrooloose/nerdtree', {
-\ 'autoload' : { 'commands' : ['NerdTreeToggle'] }
-}
-let s:bundle = neobundle#get('nerdtree')
-function! s:bundle.hooks.on_source(bundle)
-  "引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
-  ""autocmd vimenter * if !argc() | NERDTree | endif
-  "他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-  "NERDTreeShowHidden 隠しファイルを表示する
-  "let g:NERDTreeShowHidden=1
-endfunction
-unlet s:bundle
-nmap <C-e> <ESC>:NERDTreeToggle<CR>
+" NeoBundleLazy 'scrooloose/nerdtree', {
+" \ 'autoload' : { 'commands' : ['NerdTreeToggle'] }
+" }
+" let s:bundle = neobundle#get('nerdtree')
+" function! s:bundle.hooks.on_source(bundle)
+"   "引数なしでvimを開いたらNERDTreeを起動、引数ありならNERDTreeは起動しない、引数で渡されたファイルを開く。
+"   ""autocmd vimenter * if !argc() | NERDTree | endif
+"   "他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
+"   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"   "NERDTreeShowHidden 隠しファイルを表示する
+"   "let g:NERDTreeShowHidden=1
+" endfunction
+" unlet s:bundle
+" nmap <C-e> <ESC>:NERDTreeToggle<CR>
+
 
 "ファイル形式を検出する
 filetype on
