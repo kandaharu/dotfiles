@@ -8,11 +8,11 @@ defscrollback 10000
 # ビジュアルベル（画面全体が点滅する）を切る
 vbell off
 # 新しいウィンドウを生成するときのコマンド
-shell $SHELL
+shell -$SHELL
 # スタートアップメッセージを消す
 startup_message off
 # ウィンドウのタイトル指定
-shelltitle '$ | zsh'
+# shelltitle '$ | zsh'
 #メッセージを表示する時間(秒単位)
 #msgwait 5
 #次のメッセージを表示するまでの遅延時間(秒単位)
@@ -31,7 +31,7 @@ bind -c operate j eval 'focus down' 'command -c operate'
 bind -c operate k eval 'focus up' 'command -c operate'
 bind -c operate h eval 'focus left' 'command -c operate'
 bind -c operate l eval 'focus right' 'command -c operate'
-bind -c operate t eval 'focus top' 'command -c operate'
+# bind -c operate t eval 'focus top' 'command -c operate'
 bind -c operate b eval 'focus bottom' 'command -c operate'
 bind -c operate + eval 'resize +1' 'command -c operate'
 bind -c operate - eval 'resize -1' 'command -c operate'
@@ -55,14 +55,19 @@ bind + eval 'resize -v +1'
 bind - eval 'resize -v -1'
 bind > eval 'resize -h +1'
 bind < eval 'resize -h -1'
-bind v eval 'split -v' focus screen
-bind s eval 'split' focus screen
+# bind v eval 'split -v' focus screen
+bind s eval 'split'
+bind o eval 'only'
 bind = eval 'resize -v ='
 bind + eval 'resize -h +'
+bind 1 eval 'only'
+bind 2 eval 'split'
+bind ^1 eval 'only'
+bind ^2 eval 'split'
 
 bind ^J eval 'focus down' 'command -c cfocus'
 bind ^K eval 'focus up'   'command -c cfocus'
 bind -c cfocus ^J eval 'focus down'   'command -c cfocus'
 bind -c cfocus ^K eval 'focus up'     'command -c cfocus'
-bind -c cfocus ^T eval 'focus top'    'command -c cfocus'
-bind -c cfocus ^B eval 'focus bottom' 'command -c cfocus'
+# bind -c cfocus ^T eval 'focus top'    'command -c cfocus'
+# bind -c cfocus ^B eval 'focus bottom' 'command -c cfocus'
