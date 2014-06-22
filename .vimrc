@@ -6,7 +6,7 @@
 " メモ
 "
 " 使用前提
-" ・.vim or vimfile 直下にswap,backup,snippetsディレクトリを作成しておく
+" ・.vim or vimfile 直下にswap,backup,undo,snippetsディレクトリを作成しておく
 ""---------------------------------------------------------------------------
 
 "——————————————————————————
@@ -36,10 +36,10 @@ set wildchar=<Tab>
 "変更中のファイルでも、保存しないで他のファイルを表示
 set hidden
 " 自動的に現在編集中のファイルのカレントディレクトリに移動
-augroup grlcd
-  autocmd!
-  autocmd BufEnter * execute ":silent! lcd" . expand("%:p:h")
-augroup END
+" augroup grlcd
+"   autocmd!
+"   autocmd BufEnter * execute ":silent! lcd" . expand("%:p:h")
+" augroup END
 
 "——————————————————————————
 " 表示
@@ -141,6 +141,8 @@ set autoread
 set backupdir=$DOTVIM/backup
 "スワップファイル用のディレクトリ
 set directory=$DOTVIM/swap
+"undo用のディレクトリ
+set undodir=$DOTVIM/undo
 
 "——————————————————————————
 " マッピング

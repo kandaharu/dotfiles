@@ -11,3 +11,5 @@
 .vim/.netrwhist
 .vim/syntax
 .vim/syntax/*
+.vim/undo
+.vim/undo/*
