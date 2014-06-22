@@ -5,7 +5,9 @@
 	ui = auto
 [alias]
 	decolog = log --graph --decorate --branches --oneline
+	dlog = log --graph --decorate --branches --oneline
 	prettylog = log --graph --decorate --branches --pretty=short
+	plog = log --graph --decorate --branches --pretty=short
 	co = checkout
 	ci = commit
 	reb = rebase
