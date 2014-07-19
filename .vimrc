@@ -28,7 +28,7 @@ set mouse=a
 "vi 互換モードをオフにする
 set nocompatible
 "クリップボードをOSと連携
-set clipboard=+unnamed
+" set clipboard=+unnamed
 "ビープ音をならさない
 set vb t_vb=
 "Tabで補完できるようにする
@@ -241,6 +241,7 @@ NeoBundle 'tomasr/molokai'
 NeoBundleLazy 'Shougo/unite.vim' , {
 \   'autoload' : { 'commands' : [ 'Unite' ] }
 \ }
+NeoBundle 'Shougo/neomru.vim'
 let s:bundle = neobundle#get('unite.vim')
 function! s:bundle.hooks.on_source(bundle)
   "インサートモードで開始しない
@@ -274,6 +275,7 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
+
 "unite prefix key.
 nnoremap [unite] <NOP>
 nmap <C-h> [unite]
@@ -295,6 +297,8 @@ endfunction
 unlet s:bundle
 nmap [unite]f     <ESC>:VimFilerCurrentDir -split -simple<CR>
 nmap [unite]<C-f> <ESC>:VimFilerCurrentDir -split -simple<CR>
+nmap [unite]e     <ESC>:VimFilerExplorer<CR>
+nmap [unite]<C-e>     <ESC>:VimFilerExplorer<CR>
 
 "=== コメントアウト
 NeoBundle 'tomtom/tcomment_vim'
@@ -331,6 +335,12 @@ nmap [gitv]<C-f>  <ESC>:Gitv!<CR>
 
 "=== Ruby/Rails
 NeoBundleLazy 'romanvbabenko/rails.vim'
+
+" Ruby static code analyzer.
+NeoBundle 'scrooloose/syntastic'
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_mode_map = { 'mode': 'passive',
+    \ 'active_filetypes': ['ruby'] }
 
 "=== Markdown
 " NeoBundle 'rcmdnk/vim-markdown'
