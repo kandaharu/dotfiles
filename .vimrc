@@ -36,10 +36,10 @@ set wildchar=<Tab>
 "変更中のファイルでも、保存しないで他のファイルを表示
 set hidden
 " 自動的に現在編集中のファイルのカレントディレクトリに移動
-" augroup grlcd
-"   autocmd!
-"   autocmd BufEnter * execute ":silent! lcd" . expand("%:p:h")
-" augroup END
+augroup grlcd
+  autocmd!
+  autocmd BufEnter * execute ":silent! lcd" . expand("%:p:h")
+augroup END
 
 "——————————————————————————
 " 表示
@@ -217,9 +217,10 @@ if has('vim_starting')
   set runtimepath+=$BUNDLEDIR/neobundle.vim
 endif
 
-call neobundle#rc($BUNDLEDIR)
 "Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
+call neobundle#begin($BUNDLEDIR)
+  NeoBundleFetch 'Shougo/neobundle.vim'
+call neobundle#end())''''))
 
 "== Vim
 "NeoBundle 'Shougo/vim-vcs.git'
@@ -275,10 +276,11 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
-
 "unite prefix key.
 nnoremap [unite] <NOP>
 nmap <C-h> [unite]
+nmap [unite]h     <ESC>:CdCurrent<CR>
+nmap [unite]<C-h> <ESC>:CdCurrent<CR>
 nmap [unite]u     <ESC>:Unite file_mru buffer file<CR>
 nmap [unite]<C-u> <ESC>:Unite file_mru buffer file<CR>
 nmap [unite]y     <ESC>:Unite history/yank<CR>
@@ -339,6 +341,7 @@ NeoBundleLazy 'romanvbabenko/rails.vim'
 " Ruby static code analyzer.
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_eruby_checkers = ['rubocop']
 let g:syntastic_mode_map = { 'mode': 'passive',
     \ 'active_filetypes': ['ruby'] }
 
@@ -349,7 +352,7 @@ let g:previm_open_cmd = 'open -a Firefox'
 
 
 "=== HTML/CSS/JavaScript/Sass
-NeoBundle 'taichouchou2/html5.vim'
+" NeoBundle 'taichouchou2/html5.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'taichouchou2/vim-javascript'
 NeoBundle 'kchmck/vim-coffee-script'
