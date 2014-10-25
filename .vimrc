@@ -220,7 +220,7 @@ endif
 "Let NeoBundle manage NeoBundle
 call neobundle#begin($BUNDLEDIR)
   NeoBundleFetch 'Shougo/neobundle.vim'
-call neobundle#end())''''))
+call neobundle#end()
 
 "== Vim
 "NeoBundle 'Shougo/vim-vcs.git'
