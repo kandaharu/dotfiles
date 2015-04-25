@@ -4,14 +4,15 @@
 [color]
 	ui = auto
 [alias]
-	decolog = log --graph --decorate --branches --oneline
-	dlog = log --graph --decorate --branches --oneline
-	prettylog = log --graph --decorate --branches --pretty=short
-	plog = log --graph --decorate --branches --pretty=short
+	plog = log --graph --decorate=short --branches --date=iso --pretty
+	pslog = log --graph --decorate=short --branches --date=iso --pretty --stat=100,100
+	dlog = log --graph --decorate=short --branches --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+	dslog = log --graph --decorate=short --branches --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' --stat=100,100
 	co = checkout
 	ci = commit
 	reb = rebase
 	st = status
+	s = status -s
 	df = diff
 	br = branch
 	ff = flow feature
