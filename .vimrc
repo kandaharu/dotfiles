@@ -338,6 +338,22 @@ unlet s:bundle
 NeoBundle 'Shougo/vimshell.git'
 NeoBundle 'Shougo/neocomplcache.git'
 
+"=== NeoComplete
+" NeoBundle 'Shougo/neocomplete.git'
+" let g:acp_enableAtStartup = 0
+" let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_smart_case = 1
+" if !exists('g:neocomplete#force_omni_input_patterns')
+"   let g:neocomplete#force_omni_input_patterns = {}
+" endif
+" let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
+
+"=== Rsense
+NeoBundle 'marcus/rsense'
+let g:rsenseHome = '/usr/local/bin/rsense'
+let g:rsenseUseOmniFunc = 1
+NeoBundle 'supermomonga/neocomplete-rsense.vim'
+
 "=== Git
 NeoBundleLazy 'gregsexton/gitv', {
 \   'autoload' : { 'commands' : [ 'Gitv', 'Gitv!' ] }
@@ -358,6 +374,12 @@ nmap [gitv]<C-f>  <ESC>:Gitv!<CR>
 
 "=== Ruby/Rails
 NeoBundleLazy 'romanvbabenko/rails.vim'
+" ドキュメント参照
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'yuku-t/vim-ref-ri'
+
+" 自動で閉じる
+NeoBundle 'tpope/vim-endwise'
 
 " Ruby static code analyzer.
 NeoBundle 'scrooloose/syntastic'
