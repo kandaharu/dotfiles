@@ -190,6 +190,27 @@ nnoremap <C-a> <ESC>gg0vG$
 "整形
 "noremap <C-S-f> <ESC>gg=G
 
+"Spaceをリーダーに
+let mapleader = "\<Space>"
+
+"各種コマンドをリーダーに再配置
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>c :vnew<CR>
+nnoremap <Leader>s :vnew<CR>
+nnoremap <Leader>v :new<CR>
+nnoremap <Leader>h <C-w><C-h>
+nnoremap <Leader>j <C-w><C-j>
+nnoremap <Leader>k <C-w><C-k>
+nnoremap <Leader>l <C-w><C-l>
+nnoremap <Leader>tc :tabe<CR>
+nnoremap <Leader>ts :tabe<CR>
+nnoremap <Leader>th :gT<CR>
+nnoremap <Leader>tl :gt<C-l>
+nnoremap <Leader>e <ESC>:NERDTreeToggle<CR>
+nnoremap <Leader>f <ESC>:VimFilerCurrentDir -split -simple<CR>
+nnoremap <Leader>a <ESC>gg0vG$
+
 "——————————————————————————
 " オートコレクト
 "——————————————————————————
