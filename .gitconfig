@@ -4,17 +4,25 @@
 [color]
 	ui = auto
 [alias]
-	plog = log --graph --decorate=short --branches --date=iso --pretty
-	pslog = log --graph --decorate=short --branches --date=iso --pretty --stat=100,100
-	dlog = log --graph --decorate=short --branches --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
-	dslog = log --graph --decorate=short --branches --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' --stat=100,100
+	plog = log --graph --decorate=short --date=iso --pretty
+	pslog = log --graph --decorate=short --date=iso --pretty --stat=100,100
+	pplog = log --graph --decorate=short --date=iso --pretty -p
+	dlog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+	dslog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' --stat=100,100
+	dplog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' -p
 	co = checkout
 	ci = commit
 	reb = rebase
 	st = status
 	s = status -s
+	ss = show --stat=100,100
+	sshow = show --stat=100,100
 	df = diff
+	dfs = diff --stat=100,100
+	dfc = diff --cached
 	br = branch
+	fo = fetch origin -p
+	fop = fetch origin -p
 	ff = flow feature
 	fh = flow hotfix
 	fr = flow release
