@@ -241,7 +241,6 @@ endif
 "Let NeoBundle manage NeoBundle
 call neobundle#begin($BUNDLEDIR)
   NeoBundleFetch 'Shougo/neobundle.vim'
-call neobundle#end()
 
 "= Vim
 "NeoBundle 'Shougo/vim-vcs.git'
@@ -439,6 +438,7 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 nmap <C-e> <ESC>:NERDTreeToggle<CR>
+call neobundle#end()
 
 "= プラグインの最後に実行する項目
 "ファイル形式を検出する
