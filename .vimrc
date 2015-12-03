@@ -82,10 +82,10 @@ if has("syntax")
   function! ActivateInvisibleIndicator()
     "全角スペースを表示
     syntax match InvisibleJISX0208Space "　" display containedin=ALL
-    highlight InvisibleJISX0208Space term=underline ctermbg=Blue guibg=#6666ff
+    highlight InvisibleJISX0208Space term=underline ctermbg=Blue guibg=#666688
     "行末の半角スペースを表示
     syntax match InvisibleTrailedSpace "[ \t]\+$" display containedin=ALL
-    highlight InvisibleTrailedSpace term=underline ctermbg=red guibg=#ff6666
+    highlight InvisibleTrailedSpace term=underline ctermbg=Red guibg=#888866
   endf
   augroup invisible
     autocmd! invisible
