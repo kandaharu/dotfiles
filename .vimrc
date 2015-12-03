@@ -164,7 +164,6 @@ noremap <C-t><C-j>  <C-w><C-j>
 noremap <C-t>j      <C-w><C-j>
 noremap <C-t><C-k>  <C-w><C-k>
 noremap <C-t>k      <C-w><C-k>
-noremap <C-t>2      :new<CR>
 noremap <C-t><C-h>  gT
 noremap <C-t>h      gT
 noremap <C-t><C-l>  gt
@@ -172,8 +171,10 @@ noremap <C-t>l      gt
 "ついでにWindowのほうもscreenっぽく
 noremap <C-w><C-c>  :vnew<CR>
 noremap <C-w>c      :vnew<CR>
-noremap <C-w><C-v>  :new<CR>
-noremap <C-w>v      :new<CR>
+noremap <C-w><C-v>  :vnew<CR>
+noremap <C-w>v      :vnew<CR>
+noremap <C-w><C-s>  :new<CR>
+noremap <C-w>s      :new<CR>
 "コピー
 vnoremap <C-c> "*y
 "貼り付け
@@ -198,14 +199,14 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>1 :q!<CR>
 nnoremap <Leader>c :vnew<CR>
-nnoremap <Leader>s :vnew<CR>
-nnoremap <Leader>v :new<CR>
+nnoremap <Leader>s :new<CR>
+nnoremap <Leader>v :vnew<CR>
 nnoremap <Leader>h <C-w><C-h>
 nnoremap <Leader>j <C-w><C-j>
 nnoremap <Leader>k <C-w><C-k>
 nnoremap <Leader>l <C-w><C-l>
 nnoremap <Leader>tc :tabe<CR>
-nnoremap <Leader>ts :tabe<CR>
+nnoremap <Leader>tv :tabe<CR>
 nnoremap <Leader>th gT<CR>
 nnoremap <Leader>tl gt<C-l>
 nnoremap <Leader>e <ESC>:NERDTreeToggle<CR>
