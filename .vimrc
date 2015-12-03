@@ -243,7 +243,7 @@ call neobundle#begin($BUNDLEDIR)
   NeoBundleFetch 'Shougo/neobundle.vim'
 call neobundle#end()
 
-"== Vim
+"= Vim
 "NeoBundle 'Shougo/vim-vcs.git'
 "NeoBundle 'Shougo/vinarise.git'
 NeoBundle 'tpope/vim-fugitive'
@@ -255,11 +255,11 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
-"=== ColorScheme
+"= ColorScheme
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'tomasr/molokai'
 
-"=== Unite
+"= Unite
 NeoBundleLazy 'Shougo/unite.vim' , {
 \   'autoload' : { 'commands' : [ 'Unite' ] }
 \ }
@@ -309,7 +309,7 @@ nmap [unite]<C-y> <ESC>:Unite history/yank<CR>
 nmap [unite]b     <ESC>:Unite bookmark<CR>
 nmap [unite]<C-b> <ESC>:Unite bookmark<CR>
 
-"=== VimFiler
+"= VimFiler
 NeoBundle 'Shougo/vimfiler', {
 \   'autoload' : { 'commands' : [ 'VimFiler', 'VimFilerSimple',  'VimFilerExplorer',  'VimFilerCurrentDir', 'VimFilerBufferDir' ] },
 \   'depends': [ 'Shougo/unite.vim' ],
@@ -323,7 +323,7 @@ nmap [unite]<C-f> <ESC>:VimFilerCurrentDir -split -simple<CR>
 nmap [unite]j     <ESC>:VimFilerCurrentDir -simple<CR>
 nmap [unite]<C-j> <ESC>:VimFilerCurrentDir -simple<CR>
 
-"=== コメントアウト
+"= コメントアウト
 NeoBundle 'tomtom/tcomment_vim'
 let s:bundle = neobundle#get('tcomment_vim')
 function! s:bundle.hooks.on_source(bundle)
@@ -334,11 +334,11 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
-"=== neocomplecache
+"= neocomplecache
 NeoBundle 'Shougo/vimshell.git'
 NeoBundle 'Shougo/neocomplcache.git'
 
-"=== NeoComplete
+"= NeoComplete
 " NeoBundle 'Shougo/neocomplete.git'
 " let g:acp_enableAtStartup = 0
 " let g:neocomplete#enable_at_startup = 1
@@ -348,13 +348,16 @@ NeoBundle 'Shougo/neocomplcache.git'
 " endif
 " let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
 
-"=== Rsense
+"= CtrlP
+NeoBundle "ctrlpvim/ctrlp.vim"
+
+"= Rsense
 NeoBundle 'marcus/rsense'
 let g:rsenseHome = '/usr/local/bin/rsense'
 let g:rsenseUseOmniFunc = 1
 NeoBundle 'supermomonga/neocomplete-rsense.vim'
 
-"=== Git
+"= Git
 NeoBundleLazy 'gregsexton/gitv', {
 \   'autoload' : { 'commands' : [ 'Gitv', 'Gitv!' ] }
 \ }
@@ -372,7 +375,7 @@ nmap [gitv]<C-b>  <ESC>:Gitv<CR>
 nmap [gitv]f      <ESC>:Gitv!<CR>
 nmap [gitv]<C-f>  <ESC>:Gitv!<CR>
 
-"=== Ruby/Rails
+"= Ruby/Rails
 NeoBundleLazy 'romanvbabenko/rails.vim'
 " ドキュメント参照
 NeoBundle 'thinca/vim-ref'
@@ -388,19 +391,19 @@ let g:syntastic_eruby_checkers = ['rubocop']
 let g:syntastic_mode_map = { 'mode': 'passive',
     \ 'active_filetypes': ['ruby'] }
 
-"=== Markdown
+"= Markdown
 " NeoBundle 'rcmdnk/vim-markdown'
 NeoBundle 'kannokanno/previm'
 let g:previm_open_cmd = 'open -a Firefox'
 
 
-"=== HTML/CSS/JavaScript/Sass
+"= HTML/CSS/JavaScript/Sass
 " NeoBundle 'taichouchou2/html5.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'taichouchou2/vim-javascript'
 NeoBundle 'kchmck/vim-coffee-script'
 
-"=== CoffeeScript
+"= CoffeeScript
 "syntax + 自動compile
 NeoBundle 'kchmck/vim-coffee-script'
 "js BDDツール
@@ -420,7 +423,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#333344 ctermbg=darkgr
 " ガイドの幅
 let g:indent_guides_guide_size = 1
 
-"=== NERDTree
+"= NERDTree
 NeoBundleLazy 'scrooloose/nerdtree', {
 \   'autoload' : { 'commands' : [ 'NerdTreeToggle' ] }
 \ }
@@ -437,6 +440,7 @@ endfunction
 unlet s:bundle
 nmap <C-e> <ESC>:NERDTreeToggle<CR>
 
+"= プラグインの最後に実行する項目
 "ファイル形式を検出する
 filetype on
 "ファイル形式別インデントのロードをオンにする
