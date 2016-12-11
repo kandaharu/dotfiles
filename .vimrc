@@ -20,6 +20,9 @@ else
   let $BUNDLEDIR=expand('~/.vim/bundle')
 endif
 
+"フォントの設定
+set guifont=Ricty:h14
+
 "——————————————————————————
 " 基本的な設定
 "——————————————————————————
@@ -203,6 +206,7 @@ nnoremap <Leader>h <C-w><C-h>
 nnoremap <Leader>j <C-w><C-j>
 nnoremap <Leader>k <C-w><C-k>
 nnoremap <Leader>l <C-w><C-l>
+nnoremap <Leader>tt :tabe<CR>
 nnoremap <Leader>tc :tabe<CR>
 nnoremap <Leader>tv :tabe<CR>
 nnoremap <Leader>th gT<CR>
@@ -221,11 +225,11 @@ inoremap < <><LEFT>
 inoremap ' ''<LEFT>
 inoremap " ""<LEFT>
 "ビジュアルモードで選択した範囲を囲む
-vnoremap ( "zdi(<C-r>z)<ESC>
-vnoremap { "zdi{<C-r>z}<ESC>
-vnoremap [ "zdi[<C-r>z]<ESC>
-vnoremap " "zdi"<C-r>z"<ESC>
-vnoremap ' "zdi'<C-r>z'<ESC>
+vnoremap ( "zc(<C-r>z)<ESC>
+vnoremap { "zc{<C-r>z}<ESC>
+vnoremap [ "zc[<C-r>z]<ESC>
+vnoremap " "zc"<C-r>z"<ESC>
+vnoremap ' "zc'<C-r>z'<ESC>
 
 "——————————————————————————
 " プラグイン
@@ -251,6 +255,8 @@ NeoBundle 'bling/vim-airline'
 let s:bundle = neobundle#get('vim-airline')
 function! s:bundle.hooks.on_source(bundle)
   let g:airline#extensions#tabline#enabled = 1
+  " let g:airline_powerline_fonts = 1
+  " set guifont=Ricty\ Regular\ for\ Powerline:h14
 endfunction
 unlet s:bundle
 
@@ -327,7 +333,6 @@ NeoBundle 'tomtom/tcomment_vim'
 let s:bundle = neobundle#get('tcomment_vim')
 function! s:bundle.hooks.on_source(bundle)
   let g:tcommentMapLeader1 = '<C-/>'
-  let g:tcommentMapLeader2 = '<Leader>'
   let g:tcommentMapLeaderOp1 = 'gc'
   let g:tcommentMapLeaderOp2 = 'gC'
 endfunction
@@ -349,6 +354,28 @@ NeoBundle 'Shougo/neocomplcache.git'
 
 "= CtrlP
 NeoBundle "ctrlpvim/ctrlp.vim"
+" Prefix: <Leader>p
+nnoremap <Leader>pp :<C-u>CtrlPMRUFiles<CR>
+nnoremap <C-p><C-p> :<C-u>CtrlPMRUFiles<CR>
+nnoremap <Leader>p- :<C-u>CtrlPBuffer<CR>
+nnoremap <C-p><C--> :<C-u>CtrlPBuffer<CR>
+nnoremap <Leader>p@ :<C-u>CtrlPMixed<CR>
+nnoremap <C-p><C-@> :<C-u>CtrlPMixed<CR>
+nnoremap <Leader>po :<C-u>CtrlP<CR>
+nnoremap <C-p><C-o> :<C-u>CtrlP<CR>
+nnoremap <Leader>p; :<C-u>CtrlPChange<CR>
+nnoremap <C-p><C-:> :<C-u>CtrlPChange<CR>
+nnoremap <Leader>pz :<C-u>CtrlPClearAllCaches<CR><C-u>CtrlPClearCache<CR>
+nnoremap <C-p><C-z> :<C-u>CtrlPClearAllCaches<CR><C-u>CtrlPClearCache<CR>
+nnoremap <Leader>pl :<C-u>CtrlPLine<CR>
+nnoremap <C-p><C-l> :<C-u>CtrlPLine<CR>
+
+" Guess vcs root dir
+let g:ctrlp_working_path_mode = 'ra'
+" Open new file in current window
+let g:ctrlp_open_new_file = 'r'
+let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
 
 "= Rsense
 NeoBundle 'marcus/rsense'
@@ -391,22 +418,23 @@ let g:syntastic_mode_map = { 'mode': 'passive',
     \ 'active_filetypes': ['ruby'] }
 
 "= Markdown
-" NeoBundle 'rcmdnk/vim-markdown'
+NeoBundle 'rcmdnk/vim-markdown'
 NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
 let g:previm_open_cmd = 'open -a Firefox'
-
 
 "= HTML/CSS/JavaScript/Sass
 " NeoBundle 'taichouchou2/html5.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'taichouchou2/vim-javascript'
 NeoBundle 'kchmck/vim-coffee-script'
 
 "= CoffeeScript
 "syntax + 自動compile
 NeoBundle 'kchmck/vim-coffee-script'
+
 "js BDDツール
 NeoBundle 'claco/jasmine.vim'
+
 "indentの深さに色を付ける
 NeoBundle 'nathanaelkane/vim-indent-guides'
 " vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
@@ -421,6 +449,16 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#444433 ctermbg=black
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#333344 ctermbg=darkgray
 " ガイドの幅
 let g:indent_guides_guide_size = 1
+
+
+" ES2015 Style
+NeoBundleLazy 'pangloss/vim-javascript', {'filetypes': ['javascript']}
+
+" React JSX Syntax
+NeoBundleLazy 'mxw/vim-jsx'
+
+" React Coffee JSX Syntax
+NeoBundleLazy 'mtscout6/vim-cjsx'
 
 "= NERDTree
 NeoBundleLazy 'scrooloose/nerdtree', {
