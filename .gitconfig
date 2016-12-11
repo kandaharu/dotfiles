@@ -20,6 +20,7 @@
 	df = diff
 	dfs = diff --stat=100,100
 	dfc = diff --cached
+	dfb = diff -b
 	br = branch
 	fo = fetch origin -p
 	fop = fetch origin -p
@@ -38,3 +39,5 @@
 	rebase = true
 [push]
 	default = simple
+[diff]
+	compactionHeuristic = true
