@@ -1,0 +1,26 @@
+########################################
+# パッケージ管理ツール
+########################################
+  [[plugins]]
+    repo = 'Shougo/dein.vim'
+
+########################################
+# 表示に関するプラグイン
+########################################
+
+## カラースキーム(molokai)
+  [[plugins]]
+    repo = 'tomasr/molokai'
+    hook_add = '''
+      colorscheme molokai
+    '''
+
+## git管理
+  [[plugins]]
+    repo = 'tpope/vim-fugitive'
+    hook_add = '''
+      nnoremap <silent> <Leader>gs :Gstatus<CR><C-w>T
+      nnoremap <silent> <Leader>gps :Gpush<CR>
+      nnoremap <silent> <Leader>gpl :Gpull<CR>
+    '''
+
