@@ -27,8 +27,10 @@
   ff = flow feature
   fh = flow hotfix
   fr = flow release
+  fixup = commit --amend --no-edit
 [core]
-  editor = 'vim' -c 'set fileencoding=utf-8'
+	editor = nvim
+	filemode = false
 [pager]
   log = diff-highlight | less
   show = diff-highlight | less

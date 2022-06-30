@@ -24,3 +24,5 @@
       nnoremap <silent> <Leader>gpl :Gpull<CR>
     '''
 
+    repo = "airblade/vim-gitgutter"
+

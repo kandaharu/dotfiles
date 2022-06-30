@@ -281,4 +281,3 @@ vnoremap [ "zc[<C-r>z]<ESC>
 vnoremap " "zc"<C-r>z"<ESC>
 vnoremap ' "zc'<C-r>z'<ESC>
 
-
