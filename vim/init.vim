@@ -273,6 +273,7 @@ inoremap ( ()<LEFT>
 inoremap { {}<LEFT>
 inoremap < <><LEFT>
 inoremap ' ''<LEFT>
+inoremap ` ``<LEFT>
 inoremap " ""<LEFT>
 "ビジュアルモードで選択した範囲を囲む
 vnoremap ( "zc(<C-r>z)<ESC>
@@ -280,4 +281,5 @@ vnoremap { "zc{<C-r>z}<ESC>
 vnoremap [ "zc[<C-r>z]<ESC>
 vnoremap " "zc"<C-r>z"<ESC>
 vnoremap ' "zc'<C-r>z'<ESC>
+vnoremap ` "zc`<C-r>z`<ESC>
 
