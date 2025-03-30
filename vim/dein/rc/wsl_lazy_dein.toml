@@ -62,4 +62,3 @@
             nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
           endfunction
     '''
-

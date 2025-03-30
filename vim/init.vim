@@ -10,24 +10,10 @@
 ""---------------------------------------------------------------------------
 
 "----------------------------------------------------------------------------
-" OSごとのフォルダ設定
+" フォルダ設定
 "----------------------------------------------------------------------------
-if has('win32') || has('win64')
-  let $DOTVIM=expand('~/vimfiles')
-  let $DEINDIR=expand('~/vimfiles/dein')
-else
-  let $DOTVIM=expand('~/.vim')
-  let $DEINDIR=expand('/mnt/c/home/vimfiles/dein')
-endif
-
-"WSL固有の設定
-"ヤンクでクリップボードにコピー
-if system('uname -a | grep -i microsoft') != ''
-  augroup myYank
-    autocmd!
-    autocmd TextYankPost * :call system('clip.exe', @")
-  augroup END
-endif
+let $DOTVIM=expand('~/.vim')
+let $DEINDIR=expand('~/.config/nvim/dein')
 
 "Spaceをリーダーに
 let mapleader = "\<Space>"
@@ -56,14 +42,8 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
     call dein#load_toml(s:dein_dir . '/rc/dein.toml', {'lazy': 0})
     call dein#load_toml(s:dein_dir . '/rc/lazy_dein.toml', {'lazy': 1})
-
-    if system('uname -a | grep -i microsoft') == ''
-      call dein#load_toml(s:dein_dir . '/rc/win_dein.toml', {'lazy': 0})
-      call dein#load_toml(s:dein_dir . '/rc/win_lazy_dein.toml', {'lazy': 1})
-    else
-      call dein#load_toml(s:dein_dir . '/rc/wsl_dein.toml', {'lazy': 0})
-      call dein#load_toml(s:dein_dir . '/rc/wsl_lazy_dein.toml', {'lazy': 1})
-    end
+    call dein#load_toml(s:dein_dir . '/rc/wsl_dein.toml', {'lazy': 0})
+    call dein#load_toml(s:dein_dir . '/rc/wsl_lazy_dein.toml', {'lazy': 1})
   call dein#end()
   call dein#save_state()
 endif
@@ -74,6 +54,13 @@ if dein#check_install()
 endif
 
 syntax on
+
+" GitHub Copilotの設定
+let g:copilot_filetypes = {
+    \ 'gitcommit': v:true,
+    \ 'markdown': v:true,
+    \ 'yaml': v:true
+    \ }
 
 
 "----------------------------------------------------------------------------
@@ -87,6 +74,8 @@ set clipboard=unnamed,unnamedplus
 set nocompatible
 "ビープ音をならさない
 set vb t_vb=
+set visualbell
+set noerrorbells
 "Tabで補完できるようにする
 set wildchar=<Tab>
 "変更中のファイルでも、保存しないで他のファイルを表示
@@ -97,7 +86,7 @@ augroup grlcd
   autocmd BufEnter * execute ":silent! lcd" . expand("%:p:h")
 augroup END
 "フォントの設定
-set guifont=Ricty_Diminished_Discord:h14
+set guifont=Myrica\ M:h16
 
 
 "----------------------------------------------------------------------------
@@ -155,6 +144,8 @@ endif
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
+" 対応する括弧やブレースを表示
+set showmatch matchtime=1
 
 "----------------------------------------------------------------------------
 " 操作
@@ -204,6 +195,8 @@ set undodir=$DOTVIM/undo
 "----------------------------------------------------------------------------
 " マッピング
 "----------------------------------------------------------------------------
+"USキーボード対応
+noremap ; :
 "保存
 inoremap <C-s> <ESC>:w
 noremap  <C-s> <ESC>:w
@@ -246,11 +239,11 @@ cnoremap <C-a> <ESC>gg0vG$
 vnoremap <C-a> <ESC>gg0vG$
 nnoremap <C-a> <ESC>gg0vG$
 
-
 "各種コマンドをリーダーに再配置
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>1 :q!<CR>
+nnoremap <Leader>3 :qall!<CR>
 nnoremap <Leader>c :vnew<CR>
 nnoremap <Leader>s :new<CR>
 nnoremap <Leader>v :vnew<CR>
@@ -264,22 +257,34 @@ nnoremap <Leader>tv :tabe<CR>
 nnoremap <Leader>th gT<CR>
 nnoremap <Leader>tl gt<C-l>
 nnoremap <Leader>a <ESC>gg0vG$
+nnoremap <Leader>nw :set nowrap<CR>
+nnoremap <Leader>mw :set wrap<CR>
+nnoremap <Leader>np :set nopaste<CR>
+nnoremap <Leader>mp :set paste<CR>
 
 "----------------------------------------------------------------------------
 " オートコレクト
 "----------------------------------------------------------------------------
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap { {}<LEFT>
-inoremap < <><LEFT>
-inoremap ' ''<LEFT>
-inoremap ` ``<LEFT>
-inoremap " ""<LEFT>
+"inoremap [ []<LEFT>
+"inoremap ( ()<LEFT>
+"inoremap { {}<LEFT>
+"inoremap < <><LEFT>
+"inoremap ' ''<LEFT>
+"inoremap " ""<LEFT>
 "ビジュアルモードで選択した範囲を囲む
 vnoremap ( "zc(<C-r>z)<ESC>
 vnoremap { "zc{<C-r>z}<ESC>
 vnoremap [ "zc[<C-r>z]<ESC>
 vnoremap " "zc"<C-r>z"<ESC>
 vnoremap ' "zc'<C-r>z'<ESC>
-vnoremap ` "zc`<C-r>z`<ESC>
 
+
+
+"----------------------------------------------------------------------------
+" 言語設定
+"----------------------------------------------------------------------------
+" Slim
+autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
+
+" Coffee Script
+autocmd BufNewFile,BufRead *.coffee.erb setlocal filetype=coffee

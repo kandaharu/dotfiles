@@ -5,48 +5,49 @@
   ui = auto
 [alias]
   plog = log --graph --decorate=short --date=iso --pretty
-  pslog = log --graph --decorate=short --date=iso --pretty --stat=100,100
+  pslog = log --graph --decorate=short --date=iso --pretty --stat=150,150
   pplog = log --graph --decorate=short --date=iso --pretty -p
   dlog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
-  dslog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' --stat=100,100
+  dslog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' --stat=150,150
   dplog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' -p
   co = checkout
   ci = commit
+  ciempty = commit --allow-empty
   reb = rebase
   st = status
-  s = status -s
-  ss = show --stat=100,100
-  sshow = show --stat=100,100
+  s = show
+  ss = show --stat=150,150
+  sshow = show --stat=150,150
   df = diff
-  dfs = diff --stat=100,100
+  dfs = diff --stat=150,150
   dfc = diff --cached
+  dfbc = diff -b --cached
   dfb = diff -b
+  dfmaster = diff remotes/origin/master..remotes/origin/release
+  dfmasters = diff --stat=150,150 remotes/origin/master..remotes/origin/release
+  dfrelease = diff remotes/origin/release..release
+  dfreleases = diff --stat=150,150 remotes/origin/release..release
   br = branch
   fo = fetch origin -p
   fop = fetch origin -p
-  ff = flow feature
-  fh = flow hotfix
-  fr = flow release
   fixup = commit --amend --no-edit
 [core]
-	editor = nvim
-	filemode = false
+  editor = nvim
+  filemode = true
 [pager]
-  log = diff-highlight | less
-  show = diff-highlight | less
-  diff = diff-highlight | less
+  ; log = diff-highlight | less
+  ; show = diff-highlight | less
+  ; diff = diff-highlight | less
 [merge]
   ff = false
 [pull]
   rebase = true
 [push]
   default = simple
+  autoSetupRemote = true
 [diff]
   compactionHeuristic = true
-[credential]
-  helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
-# helper = manager
-# helper = #/usr/local/share/gcm-core/git-credential-manager-core
-# credentialStore = secretservice
-[credential "https://dev.azure.com"]
-  useHttpPath = true
+[init]
+  defaultBranch = main
+[log]
+  date = iso-local

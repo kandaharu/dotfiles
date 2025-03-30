@@ -1,12 +1,12 @@
-########################################
-# ファイラー
-########################################
-
-## NerdTree
-  [[plugins]]
-    repo = 'preservim/nerdtree'
-    hook_add = '''
-      nnoremap <Leader>e <ESC>:NERDTreeToggle<CR>
-      nnoremap <C-e> <ESC>:NERDTreeToggle<CR>
-    '''
-
+# ########################################
+# # ファイラー
+# ########################################
+# 
+# ## NerdTree
+#   [[plugins]]
+#     repo = 'preservim/nerdtree'
+#     hook_add = '''
+#       nnoremap <Leader>e <ESC>:NERDTreeToggle<CR>
+#       nnoremap <C-e> <ESC>:NERDTreeToggle<CR>
+#     '''
+# 

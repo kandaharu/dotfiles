@@ -15,4 +15,16 @@ autoload -Uz promptinit
 promptinit
 prompt pure
 
+export DESKTOP="$HOME/Desktop"
+export DOWNLOAD="$HOME/Downloads"
+
+# ==== Program environment settings
+
+# fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+# asdf
+. ~/.asdf/asdf.sh
+
+export PATH="~/bin:$PATH:$(yarn global bin)"

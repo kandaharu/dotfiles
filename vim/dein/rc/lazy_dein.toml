@@ -2,33 +2,34 @@
 # ファイラー
 ########################################
 
-## あいまい検索 CtrlP
-  [[plugins]]
-    repo = 'ctrlpvim/ctrlp.vim'
-    hook_add = '''
-      " Prefix: <Leader>p
-      nnoremap <Leader>pp :<C-u>CtrlPMRUFiles<CR>
-      nnoremap <C-p><C-p> :<C-u>CtrlPMRUFiles<CR>
-      nnoremap <Leader>p- :<C-u>CtrlPBuffer<CR>
-      nnoremap <C-p><C--> :<C-u>CtrlPBuffer<CR>
-      nnoremap <Leader>p@ :<C-u>CtrlPMixed<CR>
-      nnoremap <C-p><C-@> :<C-u>CtrlPMixed<CR>
-      nnoremap <Leader>po :<C-u>CtrlP<CR>
-      nnoremap <C-p><C-o> :<C-u>CtrlP<CR>
-      nnoremap <Leader>p; :<C-u>CtrlPChange<CR>
-      nnoremap <C-p><C-:> :<C-u>CtrlPChange<CR>
-      nnoremap <Leader>pz :<C-u>CtrlPClearAllCaches<CR><C-u>CtrlPClearCache<CR>
-      nnoremap <C-p><C-z> :<C-u>CtrlPClearAllCaches<CR><C-u>CtrlPClearCache<CR>
-      nnoremap <Leader>pl :<C-u>CtrlPLine<CR>
-      nnoremap <C-p><C-l> :<C-u>CtrlPLine<CR>
+### あいまい検索 CtrlP
+#  [[plugins]]
+#    repo = 'ctrlpvim/ctrlp.vim'
+#    hook_add = '''
+#      " Prefix: <Leader>p
+#      nnoremap <Leader>pp :<C-u>CtrlPMRUFiles<CR>
+#      nnoremap <C-p><C-p> :<C-u>CtrlPMRUFiles<CR>
+#      nnoremap <Leader>p- :<C-u>CtrlPBuffer<CR>
+#      nnoremap <C-p><C--> :<C-u>CtrlPBuffer<CR>
+#      nnoremap <Leader>p@ :<C-u>CtrlPMixed<CR>
+#      nnoremap <C-p><C-@> :<C-u>CtrlPMixed<CR>
+#      nnoremap <Leader>po :<C-u>CtrlP<CR>
+#      nnoremap <C-p><C-o> :<C-u>CtrlP<CR>
+#      nnoremap <Leader>p; :<C-u>CtrlPChange<CR>
+#      nnoremap <C-p><C-:> :<C-u>CtrlPChange<CR>
+#      nnoremap <Leader>pz :<C-u>CtrlPClearAllCaches<CR><C-u>CtrlPClearCache<CR>
+#      nnoremap <C-p><C-z> :<C-u>CtrlPClearAllCaches<CR><C-u>CtrlPClearCache<CR>
+#      nnoremap <Leader>pl :<C-u>CtrlPLine<CR>
+#      nnoremap <C-p><C-l> :<C-u>CtrlPLine<CR>
+#
+#      " Guess vcs root dir
+#      let g:ctrlp_working_path_mode = 'ra'
+#      " Open new file in current window
+#      let g:ctrlp_open_new_file = 'r'
+#      let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
+#      let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
+#    '''
 
-      " Guess vcs root dir
-      let g:ctrlp_working_path_mode = 'ra'
-      " Open new file in current window
-      let g:ctrlp_open_new_file = 'r'
-      let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
-      let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
-    '''
 
 ########################################
 # シンタックスに関するプラグイン
@@ -38,6 +39,21 @@
   [[plugins]]
     repo = 'cespare/vim-toml'
     on_ft = ['toml']
+
+### Coffee Script
+#  [[plugins]]
+#    repo = 'kchmck/vim-coffee-script'
+#    on_ft = ['coffee']
+
+## Kotlin
+  [[plugins]]
+    repo = 'udalov/kotlin-vim'
+    on_ft = ['kotlin']
+
+## Terraform
+  [[plugins]]
+    repo = 'hashivim/vim-terraform'
+    on_ft = ['terraform']
 
 ########################################
 # エディタに関するプラグイン
@@ -62,6 +78,9 @@
       let g:tcomment_opleader1 = 'gc'
       let g:tcomment_opleader2 = 'gC'
     '''
+
+#  [[plugins]]
+#    repo = 'tpope/vim-commentary'
 
 ## 検索結果の件数を表示
   [[plugins]]
@@ -88,3 +107,10 @@
   [[plugins]]
     repo = 'Shougo/neosnippet-snippets'
 
+# Node.js のバージョンを上げないと coc が使えない
+### LSP
+#  [[plugins]]
+#    repo = 'neoclide/coc.nvim'
+#    merge = 0
+#    rev = 'release'
+#

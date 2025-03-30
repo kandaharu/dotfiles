@@ -11,14 +11,138 @@ if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; t
 fi
 
 
-alias rm="rm -f"
-alias mv="mv -f"
-alias cp="cp -f"
+# aliases
+
+alias rm="rm -fv"
+alias mv="mv -fv"
+alias cp="cp -fv"
+
+alias grep="grep --color=auto"
 
 alias ls="ls --color=auto"
 alias ll="ls -la"
+alias l="ls -l"
 alias vi=nvim
 
 alias g=git
 alias d=docker
 alias dc=docker-compose
+
+alias be="bundle exec"
+alias br="./bin/rails"
+alias r="./bin/rails"
+alias brake="./bin/rake"
+
+alias work="cd ~/work"
+alias project="cd ~/project"
+alias uishig="cd ~/project/vue/ui-shig-5th/"
+
+alias todo="cd ~/work/todo"
+
+alias main="git checkout main"
+alias master="git checkout master"
+alias develop="git checkout develop"
+alias staging="git checkout staging"
+alias release="git checkout release"
+
+alias gg="git grep"
+alias ggrep="git grep"
+alias gl="git ls-files"
+alias gls="git ls-files"
+alias glg="git ls-files | grep"
+alias glf="git ls-files | fzf"
+
+
+# 仕事が遅い人は絶対に知らないワンライナー10選 | Qiita
+# See. https://qiita.com/Rasukarusan/items/61f435bf899dc99d7e79
+
+# gbr - checkout git branch
+gbr() {
+  local branches branch
+  branches=$(git branch -vv) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
+# カレントディレクトリ以下をプレビューし選択して vim で開く
+alias lk='_look'
+_look() {
+  if [ "$1" = "-a" ]; then
+    local find_result=$(find . -type f -o -type l)
+  else
+    local find_result=$(find . -maxdepth 1 -type f -o -type l)
+  fi
+  local target_files=($(echo "$find_result" \
+    | sed 's/\.\///g' \
+    | grep -v -e '.jpg' -e '.gif' -e '.png' -e '.jpeg' \
+    | sort -r \
+    | fzf-tmux -p80% --select-1 --prompt 'nvim ' --preview 'bat --color always {}' --preview-window=right:70%
+  ))
+  [ "$target_files" = "" ] && return
+  nvim -p ${target_files[@]}
+}
+
+# 本日変更があったファイルのみをls
+alias lt='_ls_today'
+function _ls_today() {
+  gls --color=auto --full-time --time-style="+%Y-%m-%d %H:%M:%S" $1 | grep $(date "+%F")
+}
+
+alias lta='_ls_today_all'
+function _ls_today_all() {
+  gls --color=auto -la --full-time --time-style="+%Y-%m-%d %H:%M:%S" $1 | grep $(date "+%F")
+}
+
+# fzfでyarn。カレントディレクトリにpackege.jsonがある場合はそれを利用。なければgit管理化のrootにあるpackage.jsonを利用
+alias yy='_fzf_yarn'
+_fzf_yarn() {
+  local packageJson=$(find ./ -maxdepth 1  -name 'package.json')
+  if [ -z "$packageJson" ]; then
+    local gitRoot=$(git rev-parse --show-cdup)
+    packageJson=$(find ${gitRoot}. -maxdepth 2  -name 'package.json')
+  fi
+  [ -z "$packageJson" ] && return
+  local actions=($(cat ${packageJson} | jq -r '.scripts | keys | .[]' \
+    | fzf-tmux -p --preview "cat ${packageJson} | jq -r '.scripts[\"{}\"]'" --preview-window=up:1))
+  [ -z "$actions" ] && return
+  local cmd=''
+  for action in "${actions[@]}"; do
+    if [ -z "$cmd" ]; then
+      cmd="yarn $action"
+    else
+      cmd="$cmd && yarn $action"
+    fi
+  done
+  printf "\e[35m$cmd\n\e[m\n"
+  print -s "$cmd"
+  eval "$cmd"
+}
+
+# デスクトップ上アイコンの表示/非表示を切り替える
+alias dt='_toggle_desktop_icon_display'
+_toggle_desktop_icon_display() {
+  local isDisplay=$(defaults read com.apple.finder CreateDesktop)
+  if [ $isDisplay -eq 1 ]; then
+    defaults write com.apple.finder CreateDesktop -boolean false && killall Finder
+  else
+    defaults write com.apple.finder CreateDesktop -boolean true && killall Finder
+  fi
+}
+
+# グローバルIPを確認
+alias myip='curl ifconfig.io -4'
+
+# お天気情報を出力する
+alias tenki='curl -4 http://wttr.in/tokyo'
+
+
+# release と master を force で clean する
+alias gbrcleanforce='_gbr_clean_force'
+_gbr_clean_force() {
+  git checkout release
+  git branch -D master
+  git checkout master
+  git branch -D release
+  git checkout release
+}
+

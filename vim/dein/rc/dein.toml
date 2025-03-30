@@ -19,10 +19,65 @@
   [[plugins]]
     repo = 'tpope/vim-fugitive'
     hook_add = '''
-      nnoremap <silent> <Leader>gs :Gstatus<CR><C-w>T
+      nnoremap <silent> <Leader>gs :Git status<CR>
+      nnoremap <silent> <Leader>gd :Gdiffsplit<CR>
       nnoremap <silent> <Leader>gps :Gpush<CR>
       nnoremap <silent> <Leader>gpl :Gpull<CR>
     '''
 
+  [[plugins]]
     repo = "airblade/vim-gitgutter"
 
+
+########################################
+# ファイラー
+########################################
+
+# あいまい検索 fzf
+  [[plugins]]
+    repo = 'junegunn/fzf'
+    build = './install --bin'
+    merged = '0'
+
+  [[plugins]]
+    repo = 'junegunn/fzf.vim'
+    hook_add = '''
+      " Prefix: <Leader>r or <Leader>p
+      nnoremap <Leader>rr :<C-u>Files<CR>
+      nnoremap <Leader>rf :<C-u>Files<CR>
+      nnoremap <Leader>rg :<C-u>GFiles?<CR>
+      nnoremap <Leader>rb :<C-u>Buffers<CR>
+      nnoremap <Leader>rh :<C-u>History<CR>
+      nnoremap <Leader>rp :<C-u>History<CR>
+      nnoremap <Leader>ph :<C-u>History<CR>
+      nnoremap <Leader>pp :<C-u>History<CR>
+      nnoremap <C-p><C-p> :<C-u>History<CR>
+    '''
+
+
+########################################
+# ステータスラインに関するプラグイン
+########################################
+
+## ステータスライン
+  [[plugins]]
+    repo = 'itchyny/lightline.vim'
+    hook_add = '''
+      let g:lightline = { 'colorscheme': 'molokai' }
+      set laststatus=2
+      set noshowmode
+    '''
+
+########################################
+# シンタックスに関するプラグイン
+########################################
+
+## Coffee Script
+  [[plugins]]
+    repo = 'kchmck/vim-coffee-script'
+    on_ft = ['coffee']
+
+## Slim
+  [[plungins]]
+    repo = 'slim-template/vim-slim'
+    on_ft = ['slim']
