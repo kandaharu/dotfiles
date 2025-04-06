@@ -164,7 +164,7 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 "貼り付けモードのオンオフ
-set pastetoggle=<F3>
+"set pastetoggle=<F3>
 
 "----------------------------------------------------------------------------
 " 検索
