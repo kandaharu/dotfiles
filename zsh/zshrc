@@ -11,20 +11,20 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-autoload -Uz promptinit
-promptinit
+fpath+=$HOME/.zfunctions
+autoload -U promptinit; promptinit
 prompt pure
 
+export PATH="/Users/yu.takahashi/bin:$PATH"
 export DESKTOP="$HOME/Desktop"
 export DOWNLOAD="$HOME/Downloads"
 
-# ==== Program environment settings
+
+export PATH="~/bin:$PATH:$(yarn global bin)"
+
+# mise
+eval "$(mise activate zsh)"
 
 # fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
-# asdf
-. ~/.asdf/asdf.sh
-
-export PATH="~/bin:$PATH:$(yarn global bin)"

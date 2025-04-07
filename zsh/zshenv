@@ -24,6 +24,8 @@ alias ll="ls -la"
 alias l="ls -l"
 alias vi=nvim
 
+alias python="python3"
+
 alias g=git
 alias d=docker
 alias dc=docker-compose
@@ -134,7 +136,6 @@ alias myip='curl ifconfig.io -4'
 
 # お天気情報を出力する
 alias tenki='curl -4 http://wttr.in/tokyo'
-
 
 # release と master を force で clean する
 alias gbrcleanforce='_gbr_clean_force'

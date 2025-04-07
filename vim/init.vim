@@ -64,6 +64,16 @@ let g:copilot_filetypes = {
 
 
 "----------------------------------------------------------------------------
+" GitHub Copilotの設定
+"----------------------------------------------------------------------------
+let g:copilot_filetypes = {
+    \ 'gitcommit': v:true,
+    \ 'markdown': v:true,
+    \ 'yaml': v:true
+    \ }
+
+
+"----------------------------------------------------------------------------
 " 基本的な設定
 "----------------------------------------------------------------------------
 "マウスで選択できるようにする
@@ -163,8 +173,6 @@ set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-"貼り付けモードのオンオフ
-"set pastetoggle=<F3>
 
 "----------------------------------------------------------------------------
 " 検索
@@ -270,6 +278,7 @@ nnoremap <Leader>mp :set paste<CR>
 "inoremap { {}<LEFT>
 "inoremap < <><LEFT>
 "inoremap ' ''<LEFT>
+"inoremap ` ``<LEFT>
 "inoremap " ""<LEFT>
 "ビジュアルモードで選択した範囲を囲む
 vnoremap ( "zc(<C-r>z)<ESC>
@@ -277,8 +286,6 @@ vnoremap { "zc{<C-r>z}<ESC>
 vnoremap [ "zc[<C-r>z]<ESC>
 vnoremap " "zc"<C-r>z"<ESC>
 vnoremap ' "zc'<C-r>z'<ESC>
-
-
 
 "----------------------------------------------------------------------------
 " 言語設定
@@ -288,3 +295,4 @@ autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
 
 " Coffee Script
 autocmd BufNewFile,BufRead *.coffee.erb setlocal filetype=coffee
+
