@@ -28,7 +28,7 @@ alias python="python3"
 
 alias g=git
 alias d=docker
-alias dc=docker-compose
+alias dc='docker compose'
 
 alias be="bundle exec"
 alias br="./bin/rails"
@@ -145,5 +145,11 @@ _gbr_clean_force() {
   git checkout master
   git branch -D release
   git checkout release
+}
+
+# ひとつ前のコマンドを再実行して、結果を標準出力にコピー
+alias cpres='_copy_result'
+_copy_result() {
+  eval "$(fc -ln -1)" | pbcopy
 }
 

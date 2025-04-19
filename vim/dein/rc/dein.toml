@@ -15,19 +15,6 @@
       colorscheme molokai
     '''
 
-## git管理
-  [[plugins]]
-    repo = 'tpope/vim-fugitive'
-    hook_add = '''
-      nnoremap <silent> <Leader>gs :Git status<CR>
-      nnoremap <silent> <Leader>gd :Gdiffsplit<CR>
-      nnoremap <silent> <Leader>gps :Gpush<CR>
-      nnoremap <silent> <Leader>gpl :Gpull<CR>
-    '''
-
-  [[plugins]]
-    repo = "airblade/vim-gitgutter"
-
 
 ########################################
 # ファイラー
@@ -41,17 +28,16 @@
 
   [[plugins]]
     repo = 'junegunn/fzf.vim'
+    depends = ['junegunn/fzf']
     hook_add = '''
-      " Prefix: <Leader>r or <Leader>p
-      nnoremap <Leader>rr :<C-u>Files<CR>
+      " Prefix: <Leader>r
+      nnoremap <Leader>rr :<C-u>GFiles<CR>
       nnoremap <Leader>rf :<C-u>Files<CR>
+      nnoremap <Leader>rh :<C-u>History<CR>
       nnoremap <Leader>rg :<C-u>GFiles?<CR>
       nnoremap <Leader>rb :<C-u>Buffers<CR>
-      nnoremap <Leader>rh :<C-u>History<CR>
-      nnoremap <Leader>rp :<C-u>History<CR>
-      nnoremap <Leader>ph :<C-u>History<CR>
-      nnoremap <Leader>pp :<C-u>History<CR>
-      nnoremap <C-p><C-p> :<C-u>History<CR>
+      nnoremap <Leader>rc :<C-u>History:<CR>
+      nnoremap <Leader>rs :<C-u>History/<CR>
     '''
 
 

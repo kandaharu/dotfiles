@@ -2,33 +2,87 @@
 # ファイラー
 ########################################
 
-### あいまい検索 CtrlP
-#  [[plugins]]
-#    repo = 'ctrlpvim/ctrlp.vim'
-#    hook_add = '''
-#      " Prefix: <Leader>p
-#      nnoremap <Leader>pp :<C-u>CtrlPMRUFiles<CR>
-#      nnoremap <C-p><C-p> :<C-u>CtrlPMRUFiles<CR>
-#      nnoremap <Leader>p- :<C-u>CtrlPBuffer<CR>
-#      nnoremap <C-p><C--> :<C-u>CtrlPBuffer<CR>
-#      nnoremap <Leader>p@ :<C-u>CtrlPMixed<CR>
-#      nnoremap <C-p><C-@> :<C-u>CtrlPMixed<CR>
-#      nnoremap <Leader>po :<C-u>CtrlP<CR>
-#      nnoremap <C-p><C-o> :<C-u>CtrlP<CR>
-#      nnoremap <Leader>p; :<C-u>CtrlPChange<CR>
-#      nnoremap <C-p><C-:> :<C-u>CtrlPChange<CR>
-#      nnoremap <Leader>pz :<C-u>CtrlPClearAllCaches<CR><C-u>CtrlPClearCache<CR>
-#      nnoremap <C-p><C-z> :<C-u>CtrlPClearAllCaches<CR><C-u>CtrlPClearCache<CR>
-#      nnoremap <Leader>pl :<C-u>CtrlPLine<CR>
-#      nnoremap <C-p><C-l> :<C-u>CtrlPLine<CR>
-#
-#      " Guess vcs root dir
-#      let g:ctrlp_working_path_mode = 'ra'
-#      " Open new file in current window
-#      let g:ctrlp_open_new_file = 'r'
-#      let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
-#      let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
-#    '''
+## Defx
+    [[plugins]]
+      repo = 'Shougo/defx.nvim'
+      # depends = ['defx-git', 'defx-icons']
+      hook_add = '''
+        nnoremap <silent> <Leader>f :<C-u>Defx -auto-cd -toggle -resume -columns=mark:indent:icon:filename:type:size:time -split=floating<CR>
+        nnoremap <silent> <Leader>e :<C-u>Defx -auto-cd -toggle -resume -columns=mark:indent:icon:filename:type:size:time -split=vertical -winwidth=35<CR>
+
+        autocmd FileType defx call s:defx_my_settings()
+          function! s:defx_my_settings() abort
+            " Define mappings
+            nnoremap <silent><buffer><expr> <CR> defx#is_directory() ?
+              \ defx#do_action('open_directory') :
+              \ defx#do_action('multi', ['drop', 'quit'])
+
+            nnoremap <silent><buffer><expr> s defx#do_action('open', 'vsplit')
+            nnoremap <silent><buffer><expr> o defx#is_directory() ?
+              \ defx#do_action('open_or_close_tree') :
+              \ defx#do_action('multi', ['drop', 'quit'])
+            nnoremap <silent><buffer><expr> O defx#do_action('open_tree_recursive')
+            nnoremap <silent><buffer><expr> ~ defx#do_action('cd')
+            nnoremap <silent><buffer><expr> H defx#do_action('change_vim_cwd')
+
+            nnoremap <silent><buffer><expr> h defx#do_action('cd', ['..'])
+            nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
+            nnoremap <silent><buffer><expr> k line('.') == 1 ? 'G' : 'k'
+            nnoremap <silent><buffer><expr> l defx#is_directory() ?
+              \ defx#do_action('open') :
+              \ defx#do_action('multi', ['drop', 'quit'])
+
+            nnoremap <silent><buffer><expr> r defx#do_action('redraw')
+            nnoremap <silent><buffer><expr> q defx#do_action('quit')
+
+            nnoremap <silent><buffer><expr> ST defx#do_action('toggle_sort', 'time')
+            nnoremap <silent><buffer><expr> SS defx#do_action('toggle_sort', 'size')
+            nnoremap <silent><buffer><expr> I defx#do_action('toggle_ignored_files')
+
+            nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
+
+            nnoremap <silent><buffer><expr> Y defx#do_action('copy')
+            nnoremap <silent><buffer><expr> X defx#do_action('move')
+            nnoremap <silent><buffer><expr> P defx#do_action('paste')
+            nnoremap <silent><buffer><expr> DD defx#do_action('remove')
+            nnoremap <silent><buffer><expr> R defx#do_action('rename')
+
+            nnoremap <silent><buffer><expr> F defx#do_action('new_directory')
+            nnoremap <silent><buffer><expr> N defx#do_action('new_file')
+            nnoremap <silent><buffer><expr> M defx#do_action('new_multiple_files')
+
+            nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
+            nnoremap <silent><buffer><expr> * defx#do_action('toggle_select_all')
+
+            nnoremap <silent><buffer><expr> i defx#do_action('toggle_columns', 'mark:indent:icon:filename:type:size:time')
+            nnoremap <silent><buffer><expr> ! defx#do_action('execute_command')
+            nnoremap <silent><buffer><expr> ; defx#do_action('repeat')
+
+            nnoremap <silent><buffer><expr> x defx#do_action('execute_system')
+            nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
+          endfunction
+    '''
+
+########################################
+# パッケージ管理ツール
+########################################
+
+## git管理
+  [[plugins]]
+    repo = "airblade/vim-gitgutter"
+
+  [[plugins]]
+    repo = 'tpope/vim-fugitive'
+    on_event = 'BufReadPre'
+    hook_add = '''
+      nnoremap <silent> <Leader>gs :Git status<CR>
+      nnoremap <silent> <Leader>gb :Git blame<CR>
+      nnoremap <silent> <Leader>gd :Gdiffsplit<CR>
+      nnoremap <silent> <Leader>gps :Gpush<CR>
+      nnoremap <silent> <Leader>gpl :Gpull<CR>
+    '''
+
+
 
 
 ########################################
@@ -95,18 +149,6 @@
 # 入力補完に関するプラグイン
 ########################################
 
-## 入力補完
-  [[plugins]]
-    repo = 'Shougo/neocomplcache'
-
-## スニペットの補完機能
-  [[plugins]]
-    repo = 'Shougo/neosnippet'
-
-## スニペット集
-  [[plugins]]
-    repo = 'Shougo/neosnippet-snippets'
-
 # Node.js のバージョンを上げないと coc が使えない
 ### LSP
 #  [[plugins]]
@@ -114,3 +156,23 @@
 #    merge = 0
 #    rev = 'release'
 #
+
+
+########################################
+# AI コーディング支援
+########################################
+
+## GitHub Copilot
+  [[plugins]]
+    repo = 'github/copilot.vim'
+    on_event = 'InsertEnter'
+    hook_add = '''
+      let g:copilot_filetypes = {
+      \ 'gitcommit': v:true,
+      \ 'markdown': v:true,
+      \ 'yaml': v:true,
+      \ 'toml': v:true,
+      \ 'plaintext': v:false,
+      \ }
+    '''
+

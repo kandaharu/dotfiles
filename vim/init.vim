@@ -42,8 +42,6 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
     call dein#load_toml(s:dein_dir . '/rc/dein.toml', {'lazy': 0})
     call dein#load_toml(s:dein_dir . '/rc/lazy_dein.toml', {'lazy': 1})
-    call dein#load_toml(s:dein_dir . '/rc/wsl_dein.toml', {'lazy': 0})
-    call dein#load_toml(s:dein_dir . '/rc/wsl_lazy_dein.toml', {'lazy': 1})
   call dein#end()
   call dein#save_state()
 endif
@@ -55,31 +53,13 @@ endif
 
 syntax on
 
-" GitHub Copilotの設定
-let g:copilot_filetypes = {
-    \ 'gitcommit': v:true,
-    \ 'markdown': v:true,
-    \ 'yaml': v:true
-    \ }
-
-
-"----------------------------------------------------------------------------
-" GitHub Copilotの設定
-"----------------------------------------------------------------------------
-let g:copilot_filetypes = {
-    \ 'gitcommit': v:true,
-    \ 'markdown': v:true,
-    \ 'yaml': v:true
-    \ }
-
-
 "----------------------------------------------------------------------------
 " 基本的な設定
 "----------------------------------------------------------------------------
 "マウスで選択できるようにする
 set mouse=a
 "クリップボードをOSと連携
-set clipboard=unnamed,unnamedplus
+set clipboard=unnamedplus
 "vi 互換モードをオフにする
 set nocompatible
 "ビープ音をならさない
@@ -148,9 +128,11 @@ if has("syntax")
   augroup invisible
     autocmd! invisible
     autocmd BufNew,BufRead * call ActivateInvisibleIndicator()
-  augroup ENDendif
+  augroup END
 endif
+
 " UTF-8の□や○でカーソル位置がずれないようにする
+set fillchars=vert:\|,fold:-,eob:\~
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
@@ -199,6 +181,12 @@ set backupdir=$DOTVIM/backup
 set directory=$DOTVIM/swap
 "undo用のディレクトリ
 set undodir=$DOTVIM/undo
+
+"----------------------------------------------------------------------------
+" Luaを早くする
+"----------------------------------------------------------------------------
+let g:do_filetype_lua = 0
+let g:did_load_filetypes = 0
 
 "----------------------------------------------------------------------------
 " マッピング

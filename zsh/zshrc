@@ -19,11 +19,9 @@ export PATH="/Users/yu.takahashi/bin:$PATH"
 export DESKTOP="$HOME/Desktop"
 export DOWNLOAD="$HOME/Downloads"
 
-
-export PATH="~/bin:$PATH:$(yarn global bin)"
-
 # mise
 eval "$(mise activate zsh)"
+export PATH="~/bin:$PATH:$(yarn global bin)"
 
 # fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

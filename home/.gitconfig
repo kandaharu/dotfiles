@@ -10,6 +10,7 @@
   dlog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
   dslog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' --stat=150,150
   dplog = log --graph --decorate=short --date=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s' -p
+  clog = log --no-merges --decorate=short --date=iso --pretty=format:'%cd %Cgreen%h %Cblue%cn %Cred%d %Creset%s'
   co = checkout
   ci = commit
   ciempty = commit --allow-empty
@@ -31,6 +32,8 @@
   fo = fetch origin -p
   fop = fetch origin -p
   fixup = commit --amend --no-edit
+  brrm = "!git branch --merged | grep -E -v '^\\s*\\*|^\\s*master$|^\\s*main$|^\\s*develop$|^\\s*staging[0-9]*$|^\\s*release[0-9]*$|^\\s*feature[0-9]*$'"
+  brrmdo = "!git branch --merged | grep -E -v '^\\s*\\*|^\\s*master$|^\\s*main$|^\\s*develop$|^\\s*staging[0-9]*$|^\\s*release[0-9]*$|^\\s*feature[0-9]*$' | xargs -n 1 git branch -d"
 [core]
   editor = nvim
   filemode = true
