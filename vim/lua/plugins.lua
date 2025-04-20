@@ -128,42 +128,6 @@ require('lazy').setup({
     end,
   },
 
-  -- 高度なシンタックスハイライトとインデント
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    event = 'BufReadPost',
-    config = function()
-      require('nvim-treesitter.configs').setup({
-        ensure_installed = {
-          -- ベース言語
-          'lua', 'python', 'javascript', 'typescript', 'tsx', 'go', 'ruby', 'java',
-          -- Web / Framework
-          'html', 'css', 'vue', 'json', 'scss',
-          -- Template
-          'slim', 'pug',
-          -- Config / Infra
-          'toml', 'yaml', 'terraform', 'make', 'nginx', 'git_config', 'git_rebase',
-          -- Git 系
-          'gitignore', 'gitcommit', 'gitattributes',
-          -- ドキュメント・データ形式
-          'markdown', 'markdown_inline', 'csv', 'tsv',
-          -- 正規表現 / 通信
-          'regex', 'http',
-          -- SQL 系
-          'sql',
-          -- シェル系
-          'bash',
-          -- Diff
-          'diff',
-        },
-
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
-    end,
-  },
-
   -----------------------------------
   -- Git 関連プラグイン
   -----------------------------------
@@ -252,4 +216,52 @@ require('lazy').setup({
       }
     end,
   },
+
+  -----------------------------------
+  -- 高度なシンタックスハイライトとインデント
+  -----------------------------------
+
+  -- Treesitter 本体
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    event = 'BufReadPost',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        ensure_installed = {
+          'lua', 'python', 'javascript', 'typescript', 'tsx', 'go', 'ruby', 'java',
+          'html', 'css', 'vue', 'json', 'scss', 'markdown', 'bash', 'yaml', 'toml',
+        },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
+        indent = {
+          enable = true,
+        },
+      })
+    end,
+  },
+
+  -- Treesitter コンテキスト表示
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context').setup({
+        enable = true, -- 有効化
+        max_lines = 3, -- 表示する最大行数
+        trim_scope = 'outer', -- 長すぎる場合に外側をトリム
+      })
+    end,
+  },
+
+  -- 自動タグ補完
+  {
+    'windwp/nvim-ts-autotag',
+    event = 'InsertEnter',
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end,
+  },
+
 })
