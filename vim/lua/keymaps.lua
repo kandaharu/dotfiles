@@ -2,7 +2,7 @@
 -- キーマッピング
 -----------------------------------------------------------------------------
 -- Spaceをリーダーに
-vim.g.mapleader = " "
+vim.g.mapleader = ' '
 vim.keymap.set('', '<Space>', '<Nop>', { noremap = true, silent = true })
 
 local function map(mode, lhs, rhs, opts)
@@ -91,4 +91,4 @@ map('v', '(', '"zc(<C-r>z)<ESC>', { noremap = false })
 map('v', '{', '"zc{<C-r>z}<ESC>', { noremap = false })
 map('v', '[', '"zc[<C-r>z]<ESC>', { noremap = false })
 map('v', '"', '"zc"<C-r>z"<ESC>', { noremap = false })
-map('v', "'", "\"zc'<C-r>z'<ESC>", { noremap = false })
+map('v', "'", '"zc\'<C-r>z\'<ESC>', { noremap = false })
