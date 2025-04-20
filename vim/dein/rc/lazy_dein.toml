@@ -7,7 +7,6 @@
       repo = 'Shougo/defx.nvim'
       # depends = ['defx-git', 'defx-icons']
       hook_add = '''
-        nnoremap <silent> <Leader>f :<C-u>Defx -auto-cd -toggle -resume -columns=mark:indent:icon:filename:type:size:time -split=floating<CR>
         nnoremap <silent> <Leader>e :<C-u>Defx -auto-cd -toggle -resume -columns=mark:indent:icon:filename:type:size:time -split=vertical -winwidth=35<CR>
 
         autocmd FileType defx call s:defx_my_settings()
@@ -70,6 +69,11 @@
 ## git管理
   [[plugins]]
     repo = "airblade/vim-gitgutter"
+    on_event = 'BufRead'
+    hook_source = '''
+      let g:gitgutter_enabled = 1
+      autocmd BufWritePost,BufEnter * GitGutter
+    '''
 
   [[plugins]]
     repo = 'tpope/vim-fugitive'
@@ -112,10 +116,6 @@
 ########################################
 # エディタに関するプラグイン
 ########################################
-
-## インデントをわかりやすく
-  [[plugins]]
-    repo = 'Yggdroot/indentLine'
 
 ## 文末のスペースを赤く表示
   [[plugins]]

@@ -1,5 +1,5 @@
 "---------------------------------------------------------------------------
-" kandaharu's .vimrc
+" kandaharu's init.vim
 "---------------------------------------------------------------------------
 
 "---------------------------------------------------------------------------
@@ -51,8 +51,6 @@ if dein#check_install()
   call dein#install()
 endif
 
-syntax on
-
 "----------------------------------------------------------------------------
 " 基本的な設定
 "----------------------------------------------------------------------------
@@ -91,7 +89,7 @@ set showcmd
 "現在のカーソル位置を表示
 set ruler
 "折り返ししない
-set wrap! = nowrap
+set nowrap
 "折りたたみを有効にする
 "set foldmethod=syntax
 "起動時のメッセージを表示しない
@@ -102,6 +100,8 @@ set showmatch
 set list
 "tab文字やEOLを表示
 set lcs=tab:^\ ,eol:<,extends:>
+"vim-gitgutterのカーソルのちらつきをなくす
+set signcolumn=yes
 " カレントウィンドウにのみ罫線を引く
 augroup cch
   autocmd! cch
@@ -181,11 +181,13 @@ set backupdir=$DOTVIM/backup
 set directory=$DOTVIM/swap
 "undo用のディレクトリ
 set undodir=$DOTVIM/undo
+"外部で変更があったら自動で再読み込みする
+autocmd FocusGained,BufEnter * checktime
 
 "----------------------------------------------------------------------------
 " Luaを早くする
 "----------------------------------------------------------------------------
-let g:do_filetype_lua = 0
+let g:do_filetype_lua = 1
 let g:did_load_filetypes = 0
 
 "----------------------------------------------------------------------------
