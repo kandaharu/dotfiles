@@ -16,7 +16,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+
+  -----------------------------------
   -- 表示に関するプラグイン
+  -----------------------------------
+
+  -- カラースキーム (Molokai)
   {
     'tomasr/molokai',
     lazy = false,
@@ -26,11 +31,17 @@ require('lazy').setup({
     end,
   },
 
+  -----------------------------------
   -- ファイラー
+  -----------------------------------
+
+  -- Fuzzy Finder (fzf)
   {
     'junegunn/fzf',
     build = './install --bin',
   },
+
+  -- fzf 用の Vim インターフェース
   {
     'junegunn/fzf.vim',
     dependencies = { 'junegunn/fzf' },
@@ -47,38 +58,7 @@ require('lazy').setup({
     end,
   },
 
-  -- エディタに関するプラグイン
-  {
-    'Yggdroot/indentLine',
-    config = function()
-      vim.g.indentLine_enabled = 1
-      vim.g.indentLine_char = '|'
-      vim.opt.list = true
-      vim.cmd('highlight IndentLine guifg=#2A2A2A ctermfg=236')
-    end,
-  },
-
-  -- ステータスライン
-  {
-    'itchyny/lightline.vim',
-    config = function()
-      vim.g.lightline = { colorscheme = 'molokai' }
-      vim.opt.laststatus = 2
-      vim.opt.showmode = false
-    end,
-  },
-
-  -- シンタックス
-  {
-    'kchmck/vim-coffee-script',
-    ft = { 'coffee' },
-  },
-  {
-    'slim-template/vim-slim',
-    ft = { 'slim' },
-  },
-
-  -- Defx
+  -- ファイラー (Defx)
   {
     'Shougo/defx.nvim',
     config = function()
@@ -123,102 +103,32 @@ require('lazy').setup({
     end,
   },
 
-  -- GitGutter
+  -----------------------------------
+  -- エディタの見た目を改善するプラグイン
+  -----------------------------------
+
+  -- インデントガイドを表示
   {
-    'airblade/vim-gitgutter',
-    event = 'CmdlineEnter',
+    'Yggdroot/indentLine',
     config = function()
-      vim.g.gitgutter_enabled = 1
-      local debounce = vim.schedule_wrap(function()
-        vim.cmd('GitGutter')
-      end)
-      vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter' }, {
-        callback = debounce,
-      })
+      vim.g.indentLine_enabled = 1
+      vim.g.indentLine_char = '|'
+      vim.opt.list = true
+      vim.cmd('highlight IndentLine guifg=#2A2A2A ctermfg=236')
     end,
   },
 
-  -- Fugitive
+  -- ステータスライン (Lightline)
   {
-    'tpope/vim-fugitive',
-    event = 'CmdlineEnter',
+    'itchyny/lightline.vim',
     config = function()
-      if vim.fn.isdirectory('.git') == 1 then
-        vim.keymap.set('n', '<Leader>gs', ':Git status<CR>')
-        vim.keymap.set('n', '<Leader>gb', ':Git blame<CR>')
-        vim.keymap.set('n', '<Leader>gd', ':Gdiffsplit<CR>')
-        vim.keymap.set('n', '<Leader>gps', ':Gpush<CR>')
-        vim.keymap.set('n', '<Leader>gpl', ':Gpull<CR>')
-      end
+      vim.g.lightline = { colorscheme = 'molokai' }
+      vim.opt.laststatus = 2
+      vim.opt.showmode = false
     end,
   },
 
-  -- TOML Syntax
-  {
-    'cespare/vim-toml',
-    ft = { 'toml' },
-  },
-
-  -- Kotlin Syntax
-  {
-    'udalov/kotlin-vim',
-    ft = { 'kotlin' },
-  },
-
-  -- Terraform Syntax
-  {
-    'hashivim/vim-terraform',
-    ft = { 'terraform' },
-  },
-
-  -- Trailing Whitespace
-  {
-    'bronson/vim-trailing-whitespace',
-    config = function()
-      vim.g.extra_whitespace_ignored_filetypes = { 'defx' }
-    end,
-  },
-
-  -- Commenting
-  {
-    'tomtom/tcomment_vim',
-    config = function()
-      vim.g.tcomment_mapleader1 = '<C-/>'
-      vim.g.tcomment_opleader1 = 'gc'
-      vim.g.tcomment_opleader2 = 'gC'
-    end,
-  },
-
-  -- Search Result Count
-  {
-    'osyo-manga/vim-anzu',
-  },
-
-  -- Enhanced f Search
-  {
-    'rhysd/clever-f.vim',
-  },
-
-  -- GitHub Copilot
-  {
-    'github/copilot.vim',
-    event = 'InsertEnter',
-    config = function()
-      vim.g.copilot_filetypes = {
-        gitcommit = true,
-        markdown = true,
-        yaml = true,
-        toml = true,
-        lua = true,
-        python = true,
-        ruby = true,
-        javascript = true,
-        plaintext = false,
-      }
-    end,
-  },
-
-  -- Treesitter
+  -- 高度なシンタックスハイライトとインデント
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -251,6 +161,95 @@ require('lazy').setup({
         highlight = { enable = true },
         indent = { enable = true },
       })
+    end,
+  },
+
+  -----------------------------------
+  -- Git 関連プラグイン
+  -----------------------------------
+
+  -- Git の差分を表示
+  {
+    'airblade/vim-gitgutter',
+    event = 'CmdlineEnter',
+    config = function()
+      vim.g.gitgutter_enabled = 1
+      local debounce = vim.schedule_wrap(function()
+        vim.cmd('GitGutter')
+      end)
+      vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter' }, {
+        callback = debounce,
+      })
+    end,
+  },
+
+  -- Git 操作を簡単にする
+  {
+    'tpope/vim-fugitive',
+    event = 'CmdlineEnter',
+    config = function()
+      if vim.fn.isdirectory('.git') == 1 then
+        vim.keymap.set('n', '<Leader>gs', ':Git status<CR>')
+        vim.keymap.set('n', '<Leader>gb', ':Git blame<CR>')
+        vim.keymap.set('n', '<Leader>gd', ':Gdiffsplit<CR>')
+        vim.keymap.set('n', '<Leader>gps', ':Gpush<CR>')
+        vim.keymap.set('n', '<Leader>gpl', ':Gpull<CR>')
+      end
+    end,
+  },
+
+  -----------------------------------
+  -- その他の便利プラグイン
+  -----------------------------------
+
+  -- 行末の余分なスペースを強調表示
+  {
+    'bronson/vim-trailing-whitespace',
+    config = function()
+      vim.g.extra_whitespace_ignored_filetypes = { 'defx' }
+    end,
+  },
+
+  -- コメントアウトを簡単にする
+  {
+    'tomtom/tcomment_vim',
+    config = function()
+      vim.g.tcomment_mapleader1 = '<C-/>'
+      vim.g.tcomment_opleader1 = 'gc'
+      vim.g.tcomment_opleader2 = 'gC'
+    end,
+  },
+
+  -- 検索結果の件数を表示
+  {
+    'osyo-manga/vim-anzu',
+  },
+
+  -- f 検索を強化
+  {
+    'rhysd/clever-f.vim',
+  },
+
+  -----------------------------------
+  -- AI コーディング支援
+  -----------------------------------
+
+  -- GitHub Copilot
+  {
+    'github/copilot.vim',
+    event = 'InsertEnter',
+    config = function()
+      vim.g.copilot_filetypes = {
+        gitcommit = true,
+        markdown = true,
+        yaml = true,
+        toml = true,
+        lua = true,
+        python = true,
+        ruby = true,
+        javascript = true,
+        plaintext = false,
+      }
     end,
   },
 })
