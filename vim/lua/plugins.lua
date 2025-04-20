@@ -217,4 +217,40 @@ require('lazy').setup({
       }
     end,
   },
+
+  -- Treesitter
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    event = 'BufReadPost',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        ensure_installed = {
+          -- ベース言語
+          'lua', 'python', 'javascript', 'typescript', 'tsx', 'go', 'ruby', 'java',
+          -- Web / Framework
+          'html', 'css', 'vue', 'json', 'scss',
+          -- Template
+          'slim', 'pug',
+          -- Config / Infra
+          'toml', 'yaml', 'terraform', 'make', 'nginx', 'git_config', 'git_rebase',
+          -- Git 系
+          'gitignore', 'gitcommit', 'gitattributes',
+          -- ドキュメント・データ形式
+          'markdown', 'markdown_inline', 'csv', 'tsv',
+          -- 正規表現 / 通信
+          'regex', 'http',
+          -- SQL 系
+          'sql',
+          -- シェル系
+          'bash',
+          -- Diff
+          'diff',
+        },
+
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
+    end,
+  },
 })
