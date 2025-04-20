@@ -1,16 +1,12 @@
 "---------------------------------------------------------------------------
 " kandaharu's init.vim
-"---------------------------------------------------------------------------
-
-"---------------------------------------------------------------------------
-" メモ
 "
 " 使用前提
-" ・.vim or vimfile 直下にswap,backup,undo,snippetsディレクトリを作成しておく
-""---------------------------------------------------------------------------
+" ・.vim 直下に swap, backup, undo, snippets ディレクトリを作成しておく
+"---------------------------------------------------------------------------
 
 "----------------------------------------------------------------------------
-" フォルダ設定
+" 起動・環境設定
 "----------------------------------------------------------------------------
 let $DOTVIM=expand('~/.vim')
 let $DEINDIR=expand('~/.config/nvim/dein')
@@ -26,7 +22,6 @@ if &compatible
   set nocompatible
 endif
 
-" dein detup
 let s:dein_dir = $DEINDIR
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
@@ -52,35 +47,44 @@ if dein#check_install()
 endif
 
 "----------------------------------------------------------------------------
-" 基本的な設定
+" 入力・操作設定
 "----------------------------------------------------------------------------
 "マウスで選択できるようにする
 set mouse=a
 "クリップボードをOSと連携
 set clipboard=unnamedplus
-"vi 互換モードをオフにする
-set nocompatible
-"ビープ音をならさない
+"ビープ音をならさない（視覚ベルと合わせて抑止）
 set vb t_vb=
 set visualbell
 set noerrorbells
-"Tabで補完できるようにする
+"Tabで補完できるようにする（wildmenu が有効なら便利）
 set wildchar=<Tab>
 "変更中のファイルでも、保存しないで他のファイルを表示
 set hidden
+"バックスペースを押したときに上の行末に移動する
+set backspace=2
+"自動インデント
+set autoindent
+set smartindent
+"行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
+set smarttab
+"タブの代わりにスペースを用いる
+set expandtab
+"タブ幅の設定
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+
 " 自動的に現在編集中のファイルのカレントディレクトリに移動
 augroup grlcd
   autocmd!
   autocmd BufEnter * execute ":silent! lcd" . expand("%:p:h")
 augroup END
-"フォントの設定
-set guifont=Myrica\ M:h16
-
 
 "----------------------------------------------------------------------------
-" 表示
+" 表示設定
 "----------------------------------------------------------------------------
-"シンタックスを表示
+"シンタックスを表示（構文ハイライト）
 syntax on
 "行番号を表示
 set number
@@ -90,7 +94,7 @@ set showcmd
 set ruler
 "折り返ししない
 set nowrap
-"折りたたみを有効にする
+"折りたたみを有効にする（無効化中）
 "set foldmethod=syntax
 "起動時のメッセージを表示しない
 set shortmess+=I
@@ -98,7 +102,7 @@ set shortmess+=I
 set showmatch
 "Tab文字や、EOFを表示
 set list
-"tab文字やEOLを表示
+"tab文字やEOLを表示（lcs: listchars 設定）
 set lcs=tab:^\ ,eol:<,extends:>
 "vim-gitgutterのカーソルのちらつきをなくす
 set signcolumn=yes
@@ -108,17 +112,18 @@ augroup cch
   autocmd WinLeave * set nocursorline
   autocmd WinEnter,BufRead * set cursorline
 augroup END
+
 " エンコードをUTF-8に
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
-" LF, CR, CRLF
+" LF, CR, CRLF（改行コードの優先順）
 set ffs=unix,mac,dos
 
 " 全角スペース, 行末半角スペースの色変え
 if has("syntax")
   syntax on
   function! ActivateInvisibleIndicator()
-    "全角スペースを表示
+    "全角スペースを表示（全角空白：U+3000）
     syntax match InvisibleJISX0208Space "　" display containedin=ALL
     highlight InvisibleJISX0208Space term=underline ctermbg=Blue guibg=#666688
     "行末の半角スペースを表示
@@ -136,28 +141,9 @@ set fillchars=vert:\|,fold:-,eob:\~
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
-" 対応する括弧やブレースを表示
-set showmatch matchtime=1
 
 "----------------------------------------------------------------------------
-" 操作
-"----------------------------------------------------------------------------
-"バックスペースを押したときに上の行末に移動する
-set backspace=2
-"自動インデント
-set autoindent
-set smartindent
-"行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
-set smarttab
-"タブの代わりにスペースを用いる
-set expandtab
-"タブ幅の設定
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-
-"----------------------------------------------------------------------------
-" 検索
+" 検索・補完
 "----------------------------------------------------------------------------
 "検索結果文字列のハイライトを有効にする
 set hlsearch
@@ -167,11 +153,12 @@ set ignorecase
 set smartcase
 "インクリメンタルサーチ
 set incsearch
+
 "vimgrep の cw 自動補完
 au QuickfixCmdPost vimgrep cw
 
 "----------------------------------------------------------------------------
-" 保存
+" 保存・ファイル管理
 "----------------------------------------------------------------------------
 "編集されたら読み直す
 set autoread
@@ -185,38 +172,31 @@ set undodir=$DOTVIM/undo
 autocmd FocusGained,BufEnter * checktime
 
 "----------------------------------------------------------------------------
-" Luaを早くする
+" ファイルタイプ / 言語設定
 "----------------------------------------------------------------------------
-let g:do_filetype_lua = 1
-let g:did_load_filetypes = 0
+" Slim
+autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
+
+" Coffee Script
+autocmd BufNewFile,BufRead *.coffee.erb setlocal filetype=coffee
 
 "----------------------------------------------------------------------------
-" マッピング
+" キーマッピング
 "----------------------------------------------------------------------------
 "USキーボード対応
 noremap ; :
+
 "保存
 inoremap <C-s> <ESC>:w
 noremap  <C-s> <ESC>:w
+
 "表示行単位で移動
 noremap j gj
 noremap k gk
 noremap <DOWN> gj
 noremap <UP> gk
-"タブをscreenrcっぽくする
-noremap <C-t><C-c>  :tabe<CR>
-noremap <C-t>c      :tabe<CR>
-noremap <C-t><C-2>  :new<CR>
-noremap <C-t>2      :new<CR>
-noremap <C-t><C-j>  <C-w><C-j>
-noremap <C-t>j      <C-w><C-j>
-noremap <C-t><C-k>  <C-w><C-k>
-noremap <C-t>k      <C-w><C-k>
-noremap <C-t><C-h>  gT
-noremap <C-t>h      gT
-noremap <C-t><C-l>  gt
-noremap <C-t>l      gt
-"ついでにWindowのほうもscreenっぽく
+
+"Windowをscreenっぽく
 noremap <C-w><C-c>  :vnew<CR>
 noremap <C-w>c      :vnew<CR>
 noremap <C-w><C-v>  :vnew<CR>
@@ -241,6 +221,7 @@ nnoremap <C-a> <ESC>gg0vG$
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>1 :q!<CR>
+nnoremap <Leader>2 :wq!<CR>
 nnoremap <Leader>3 :qall!<CR>
 nnoremap <Leader>c :vnew<CR>
 nnoremap <Leader>s :new<CR>
@@ -277,12 +258,4 @@ vnoremap [ "zc[<C-r>z]<ESC>
 vnoremap " "zc"<C-r>z"<ESC>
 vnoremap ' "zc'<C-r>z'<ESC>
 
-"----------------------------------------------------------------------------
-" 言語設定
-"----------------------------------------------------------------------------
-" Slim
-autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
-
-" Coffee Script
-autocmd BufNewFile,BufRead *.coffee.erb setlocal filetype=coffee
 
