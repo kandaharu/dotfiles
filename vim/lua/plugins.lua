@@ -126,13 +126,14 @@ require('lazy').setup({
   -- GitGutter
   {
     'airblade/vim-gitgutter',
-    event = 'BufRead',
+    event = 'CmdlineEnter',
     config = function()
       vim.g.gitgutter_enabled = 1
+      local debounce = vim.schedule_wrap(function()
+        vim.cmd('GitGutter')
+      end)
       vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter' }, {
-        callback = function()
-          vim.cmd('GitGutter')
-        end,
+        callback = debounce,
       })
     end,
   },
@@ -140,13 +141,15 @@ require('lazy').setup({
   -- Fugitive
   {
     'tpope/vim-fugitive',
-    event = 'BufReadPre',
+    event = 'CmdlineEnter',
     config = function()
-      vim.keymap.set('n', '<Leader>gs', ':Git status<CR>')
-      vim.keymap.set('n', '<Leader>gb', ':Git blame<CR>')
-      vim.keymap.set('n', '<Leader>gd', ':Gdiffsplit<CR>')
-      vim.keymap.set('n', '<Leader>gps', ':Gpush<CR>')
-      vim.keymap.set('n', '<Leader>gpl', ':Gpull<CR>')
+      if vim.fn.isdirectory('.git') == 1 then
+        vim.keymap.set('n', '<Leader>gs', ':Git status<CR>')
+        vim.keymap.set('n', '<Leader>gb', ':Git blame<CR>')
+        vim.keymap.set('n', '<Leader>gd', ':Gdiffsplit<CR>')
+        vim.keymap.set('n', '<Leader>gps', ':Gpush<CR>')
+        vim.keymap.set('n', '<Leader>gpl', ':Gpull<CR>')
+      end
     end,
   },
 
@@ -206,6 +209,10 @@ require('lazy').setup({
         markdown = true,
         yaml = true,
         toml = true,
+        lua = true,
+        python = true,
+        ruby = true,
+        javascript = true,
         plaintext = false,
       }
     end,
