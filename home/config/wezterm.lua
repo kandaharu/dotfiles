@@ -161,6 +161,11 @@ config.keys = {
     mods = 'CMD',
     action = wezterm.action.ActivatePaneDirection('Up'),
   },
+  {
+    key = 'i',
+    mods = 'CMD',
+    action = wezterm.action.ActivatePaneDirection('Up'),
+  },
   -- 下へ移動
   {
     key = 'DownArrow',
