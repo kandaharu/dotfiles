@@ -13,3 +13,4 @@
 .vim/syntax/*
 .vim/undo
 .vim/undo/*
+.DS_Store
