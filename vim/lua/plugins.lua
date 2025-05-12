@@ -176,11 +176,23 @@ require('lazy').setup({
 
   -- コメントアウトを簡単にする
   {
-    'tomtom/tcomment_vim',
+    'numToStr/Comment.nvim',
+    dependencies = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    },
+    event = 'VeryLazy',
     config = function()
-      vim.g.tcomment_mapleader1 = '<C-/>'
-      vim.g.tcomment_opleader1 = 'gc'
-      vim.g.tcomment_opleader2 = 'gC'
+      require('ts_context_commentstring').setup({})
+
+      require('Comment').setup({
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+
+        -- マッピングはデフォルトの `gcc`, `gc` 系だけ有効に
+        mappings = {
+          basic = true,   -- `gcc`, `gc` など
+          extra = false,  -- `gco`, `gcO`, `gcA` を無効化
+        },
+      })
     end,
   },
 
@@ -264,4 +276,150 @@ require('lazy').setup({
     end,
   },
 
+
+  -- textobjects で操作性の向上
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true, -- 次の対象に自動ジャンプ
+
+            keymaps = {
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+              ["ic"] = "@class.inner",
+            },
+          },
+        },
+      })
+    end,
+  },
+
+
+  -----------------------------------
+  -- LSP
+  -----------------------------------
+
+  -- CMP
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',      -- LSP 用の補完ソース
+      'hrsh7th/cmp-buffer',        -- バッファ内の単語から補完
+      'hrsh7th/cmp-path',          -- パス補完
+      'L3MON4D3/LuaSnip',          -- スニペットエンジン
+      'saadparwaiz1/cmp_luasnip',  -- LuaSnip用の補完ソース
+      'onsails/lspkind.nvim',      -- アイコン付きの補完UI
+    },
+    event = 'InsertEnter',
+    config = function()
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
+
+      -- スニペットの展開方法を定義
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+
+        -- キーマッピング（挙動は VSCode ライク）
+        mapping = cmp.mapping.preset.insert({
+          ['<Tab>']     = cmp.mapping.select_next_item(),
+          ['<S-Tab>']   = cmp.mapping.select_prev_item(),
+          ['<CR>']      = cmp.mapping.confirm({ select = true }),
+          ['<C-Space>'] = cmp.mapping.complete(),
+        }),
+
+        -- 補完候補のソース定義（上から順に優先）
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+          { name = 'buffer' },
+          { name = 'path' },
+        }),
+
+        -- 補完メニューの見た目（アイコン表示など）
+        formatting = {
+          format = require('lspkind').cmp_format({
+            mode = 'symbol_text',
+            maxwidth = 50,
+            ellipsis_char = '...',
+          }),
+        },
+      })
+    end,
+  },
+
+  -- LSP関係
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'hrsh7th/cmp-nvim-lsp',
+    },
+    config = function()
+      -- LSP インストーラー
+      require('mason').setup()
+
+      -- 自動で指定サーバーをインストール
+      require('mason-lspconfig').setup({
+        ensure_installed = {
+          'ts_ls',
+          'volar',
+          'ruby_lsp',
+          'marksman',
+          'jsonls',
+          'yamlls',
+        },
+      })
+
+      local lspconfig = require('lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      -- LSP 起動時の共通設定
+      local on_attach = function(_, bufnr)
+        local opts = { buffer = bufnr }
+
+        -- 定義ジャンプ
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+
+        -- 参照一覧
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+
+
+        -- ホバー表示
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+
+        -- リネーム
+        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, opts)
+
+        -- コードアクション
+        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, opts)
+      end
+
+      -- サーバーごとの設定（必要に応じてオプション追加）
+      local servers = {
+        ts_ls = {},
+        volar = { filetypes = { 'typescript', 'javascript', 'vue' } },
+        ruby_lsp = {},
+        marksman = {},
+        jsonls = {},
+        yamlls = {},
+      }
+
+      for name, config in pairs(servers) do
+        config.on_attach = on_attach
+        config.capabilities = capabilities
+        lspconfig[name].setup(config)
+      end
+    end,
+  },
 })
