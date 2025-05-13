@@ -34,6 +34,10 @@
   fixup = commit --amend --no-edit
   brrm = "!git branch --merged | grep -E -v '^\\s*\\*|^\\s*master$|^\\s*main$|^\\s*develop$|^\\s*staging[0-9]*$|^\\s*release[0-9]*$|^\\s*feature[0-9]*$'"
   brrmdo = "!git branch --merged | grep -E -v '^\\s*\\*|^\\s*master$|^\\s*main$|^\\s*develop$|^\\s*staging[0-9]*$|^\\s*release[0-9]*$|^\\s*feature[0-9]*$' | xargs -n 1 git branch -d"
+  dfrb = "!git diff --name-only | xargs -r rubocop"
+  dfrbfix = "!git diff --name-only | xargs -r rubocop -a"
+  dfcrb = "!git diff --cached --name-only | xargs -r rubocop"
+  dfcrbfix = "!git diff --cached --name-only | xargs -r rubocop -a"
 [core]
   editor = nvim
   filemode = true
