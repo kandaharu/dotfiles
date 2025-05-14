@@ -35,20 +35,21 @@
   brrm = "!git branch --merged | grep -E -v '^\\s*\\*|^\\s*master$|^\\s*main$|^\\s*develop$|^\\s*staging[0-9]*$|^\\s*release[0-9]*$|^\\s*feature[0-9]*$'"
   brrmdo = "!git branch --merged | grep -E -v '^\\s*\\*|^\\s*master$|^\\s*main$|^\\s*develop$|^\\s*staging[0-9]*$|^\\s*release[0-9]*$|^\\s*feature[0-9]*$' | xargs -n 1 git branch -d"
   dfrb = "!git diff --name-only | xargs -r rubocop"
-  dfrbfix = "!git diff --name-only | xargs -r rubocop -a"
+  dfrbfix = "!git diff --name-only | xargs -r rubocop -A"
   dfcrb = "!git diff --cached --name-only | xargs -r rubocop"
-  dfcrbfix = "!git diff --cached --name-only | xargs -r rubocop -a"
+  dfcrbfix = "!git diff --cached --name-only | xargs -r rubocop -A"
+  cinow = "!f() { git add . && git commit -m \"auto: $(date +%Y-%m-%d_%H:%M)\" && git tag \"tag-$(date +%Y%m%d%H%M)\" && git show --stat=150,150; }; f"
 [core]
   editor = nvim
   filemode = true
-  ; pager = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -R
   pager = delta --dark
+  quotepath = false
 [delta]
   syntax-theme = Monokai Extended
   navigate = true
   line-numbers = true
-; [interactive]
-;   diffFilter = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight
+[i18n]
+	logOutputEncoding = utf-8
 [merge]
   ff = false
 [pull]

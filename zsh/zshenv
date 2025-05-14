@@ -153,3 +153,22 @@ _copy_result() {
   eval "$(fc -ln -1)" | pbcopy
 }
 
+# Obsidian のフォルダにある Markdown ファイルを、NotebookLM にコピーする前準備
+alias ob2note='_obsidian_to_notebook'
+_obsidian_to_notebook() {
+  local NOTEBOOK_DIR="notebook"
+  rm -rf "$NOTEBOOK_DIR" && mkdir -p "$NOTEBOOK_DIR"
+
+  git diff -z --name-only --diff-filter=AM HEAD^ -- '*.md' \
+    | while IFS= read -r -d '' f; do
+        # safeファイル名生成
+        local cleanname=$(echo "$f" \
+          | sed 's|^\./||' \
+          | sed 's|/|__|g' \
+          | sed 's| |_|g' \
+          | sed 's|[:*?<>|\"\\'\'']|_|g' \
+          | perl -CS -pe 's/[\p{Cc}\p{Cf}]//g')
+
+        cp -v "$f" "$NOTEBOOK_DIR/$cleanname"
+      done
+}

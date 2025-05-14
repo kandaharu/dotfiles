@@ -52,7 +52,7 @@ config.mouse_bindings = {
 -- ベル音を無効化
 config.audible_bell = "Disabled"
 -- 通知を有効化
-config.enable_wayland = true
+config.enable_wayland = false
 -- 通知の処理方法を設定
 config.notification_handling = "AlwaysShow"
 
