@@ -64,6 +64,7 @@ map('n', '<C-a>', '<ESC>gg0vG$')
 -- リーダーキーのマッピング
 map('n', '<Leader>q', ':q<CR>', { noremap = false })
 map('n', '<Leader>w', ':w<CR>', { noremap = false })
+map('n', '<Leader>`', ':q!<CR>', { noremap = false })
 map('n', '<Leader>1', ':q!<CR>', { noremap = false })
 map('n', '<Leader>2', ':wq!<CR>', { noremap = false })
 map('n', '<Leader>3', ':qall!<CR>', { noremap = false })
