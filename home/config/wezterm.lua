@@ -9,7 +9,7 @@ local config = wezterm.config_builder()
 -- 設定の自動リロード
 config.automatically_reload_config = true
 -- フォントサイズ
-config.font_size = 15
+config.font_size = 16
 -- フォント
 config.font = wezterm.font('Myrica M')
 
