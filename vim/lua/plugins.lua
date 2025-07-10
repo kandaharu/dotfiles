@@ -69,7 +69,7 @@ require('lazy').setup({
   {
     'Shougo/defx.nvim',
     config = function()
-      vim.keymap.set('n', '<Leader>e', ':Defx -auto-cd -toggle -resume -columns=mark:indent:icon:filename:type:size:time -split=vertical -winwidth=35<CR>')
+      vim.keymap.set('n', '<Leader>e', ':silent Defx -auto-cd -toggle -resume -columns=mark:indent:icon:filename:type:size:time -split=vertical -winwidth=35 | redraw!<CR>')
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'defx',
         callback = function()
@@ -364,70 +364,70 @@ require('lazy').setup({
     end,
   },
 
-  -- LSP関係
-  {
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      'hrsh7th/cmp-nvim-lsp',
-    },
-    config = function()
-      -- LSP インストーラー
-      require('mason').setup()
-
-      -- 自動で指定サーバーをインストール
-      require('mason-lspconfig').setup({
-        ensure_installed = {
-          'tsserver',
-          'volar',
-          'ruby_lsp',
-          'marksman',
-          'jsonls',
-          'yamlls',
-        },
-      })
-
-      local lspconfig = require('lspconfig')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      -- LSP 起動時の共通設定
-      local on_attach = function(_, bufnr)
-        local opts = { buffer = bufnr }
-
-        -- 定義ジャンプ
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-
-        -- 参照一覧
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-
-        -- ホバー表示
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-
-        -- リネーム
-        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, opts)
-
-        -- コードアクション
-        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, opts)
-      end
-
-      -- サーバーごとの設定（必要に応じてオプション追加）
-      local servers = {
-        tsserver = {},
-        volar = {
-          filetypes = { 'typescript', 'javascript', 'vue' },
-        },
-        ruby_lsp = {},
-        marksman = {},
-        jsonls = {},
-        yamlls = {},
-      }
-
-      for name, config in pairs(servers) do
-        config.on_attach = on_attach
-        config.capabilities = capabilities
-        lspconfig[name].setup(config)
-      end
-    end,
-  },
+--  -- LSP関係
+--  {
+--    'neovim/nvim-lspconfig',
+--    dependencies = {
+--      'williamboman/mason.nvim',
+--      'williamboman/mason-lspconfig.nvim',
+--      'hrsh7th/cmp-nvim-lsp',
+--    },
+--    config = function()
+--      -- LSP インストーラー
+--      require('mason').setup()
+--
+--      -- 自動で指定サーバーをインストール
+--      require('mason-lspconfig').setup({
+--        ensure_installed = {
+--          'ts_ls',
+--          'volar',
+--          'ruby_lsp',
+--          'marksman',
+--          'jsonls',
+--          'yamlls',
+--        },
+--      })
+--
+--      local lspconfig = require('lspconfig')
+--      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+--
+--      -- LSP 起動時の共通設定
+--      local on_attach = function(_, bufnr)
+--        local opts = { buffer = bufnr }
+--
+--        -- 定義ジャンプ
+--        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+--
+--        -- 参照一覧
+--        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+--
+--        -- ホバー表示
+--        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+--
+--        -- リネーム
+--        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, opts)
+--
+--        -- コードアクション
+--        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, opts)
+--      end
+--
+--      -- サーバーごとの設定（必要に応じてオプション追加）
+--      local servers = {
+--        ts_ls = {},
+--        volar = {
+--          filetypes = { 'typescript', 'javascript', 'vue' },
+--        },
+--        ruby_lsp = {},
+--        marksman = {},
+--        jsonls = {},
+--        yamlls = {},
+--      }
+--
+--      for name, config in pairs(servers) do
+--        config.on_attach = on_attach
+--        config.capabilities = capabilities
+--        lspconfig[name].setup(config)
+--      end
+--    end,
+--  },
 })
