@@ -379,7 +379,7 @@ require('lazy').setup({
       -- 自動で指定サーバーをインストール
       require('mason-lspconfig').setup({
         ensure_installed = {
-          'ts_ls',
+          'tsserver',
           'volar',
           'ruby_lsp',
           'marksman',
@@ -401,7 +401,6 @@ require('lazy').setup({
         -- 参照一覧
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 
-
         -- ホバー表示
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 
@@ -414,8 +413,10 @@ require('lazy').setup({
 
       -- サーバーごとの設定（必要に応じてオプション追加）
       local servers = {
-        ts_ls = {},
-        volar = { filetypes = { 'typescript', 'javascript', 'vue' } },
+        tsserver = {},
+        volar = {
+          filetypes = { 'typescript', 'javascript', 'vue' },
+        },
         ruby_lsp = {},
         marksman = {},
         jsonls = {},
