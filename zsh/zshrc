@@ -18,6 +18,7 @@ prompt pure
 export PATH="/Users/yu.takahashi/bin:$PATH"
 export DESKTOP="$HOME/Desktop"
 export DOWNLOAD="$HOME/Downloads"
+export SCREENSHOT="$HOME/Pictures/Screenshots"
 
 # mise
 eval "$(mise activate zsh)"

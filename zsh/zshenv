@@ -37,7 +37,8 @@ alias brake="./bin/rake"
 
 alias work="cd ~/work"
 alias project="cd ~/project"
-alias uishig="cd ~/project/vue/ui-shig-5th/"
+alias obsidian="cd ~/Documents/obsidian/treasurebox"
+alias dotfiles="cd ~/.dotfiles"
 
 alias todo="cd ~/work/todo"
 
@@ -53,6 +54,8 @@ alias gl="git ls-files"
 alias gls="git ls-files"
 alias glg="git ls-files | grep"
 alias glf="git ls-files | fzf"
+
+## project specific aliases
 
 
 # 仕事が遅い人は絶対に知らないワンライナー10選 | Qiita
@@ -172,3 +175,6 @@ _obsidian_to_notebook() {
         cp -v "$f" "$NOTEBOOK_DIR/$cleanname"
       done
 }
+
+# 最後に撮影したスクリーンショットのパスをエスケープしてクリップボードにコピー
+alias lastshot='ls -t ~/Pictures/Screenshots/*.png | head -1 | sed "s/ /\\\ /g" | pbcopy && echo "path: $(pbpaste)"'
